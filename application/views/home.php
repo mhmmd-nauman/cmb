@@ -1,24 +1,4 @@
-<?php
-/**
- * @author       Firoz Ahmad Likhon <likh.deshi@gmail.com>
- */
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Firoz Ahmad Likhon <likh.deshi@gmail.com>"/>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
 
-<body class="text-center">
-    Welcome to home.
-    For logout: <a href="<?= site_url('login/logout')?>">Click here</a>
-
-    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <h3>#To add permission#</h3>
