@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script type="text/javascript" src="<?php echo base_url();?>assets/mdb-free/js/mdb.js"></script>
 </head>
 
-<body class="text-center">
+<body >
     <div class="container-fluid">
         <div class="row">						
             <div  class="col-md-12 " >
@@ -52,48 +52,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <div class="row">	
-            <div class="col-md-12">
+            <div class="col-md-12 text-center">
                 
-                <h2> CMB Repository</h2>
+                <h3> CMB Repository</h3>
                 </a>
             </div>						
         </div>
         <BR>
+        <?php 
+        //print_r($this->session->userdata["userID"]);
+        if(isset($this->session->userdata["userID"])){
+            
+        
+        if ($this->session->userdata["userID"]) {?>
         <div class="row">
-            <div class=" col-md-12">
+            <div class=" col-md-10 col-md-offset-1">
                 <nav class = "navbar navbar-default" role = "navigation" >
    
                 <div class = "navbar-header">
-                   <a class = "navbar-brand" href = "<?php echo base_url();?>/">IUB CMB Repository</a>
+                   <a class = "navbar-brand" href = "<?php echo site_url('home');?>">IUB CMB Repository</a>
                 </div>
 
                 <div>
                    <ul class = "nav navbar-nav">
                       <li class = "dropdown">
                          <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
-                            Applications Manager 
+                             Manager 
                             <b class = "caret"></b>
                          </a>
 
                          <ul class = "dropdown-menu">
-                            <li><a href ="#" data-toggle="modal" data-target="#FindApplicantApplicationsModal">Find Applications</a></li> 
-                            <li class = "divider"></li>
-                            <li><a href = "receieved_apps_programs_wise.php">Received Applications - Programme Wsie</a></li>
-                            
-                            <li class = "divider"></li>
-                            <li><a href ="#" data-toggle="modal" data-target="#FindApplicantModal">Find an Applicants</a></li>
+                            <li><a href = "receieved_apps_programs_wise.php">Manage Departments</a></li>
                             <li class = "divider"></li>
                             <li>
-                                <a href ="programs_offered.php"  >Programs Offered</a>
+                                <a href ="<?= site_url('course')?>"  >Manage Courses</a>
                             </li>
-                           
+                           <li class = "divider"></li>
+                            <li>
+                                <a href ="Manage Courses.php"  >Manage Course Material Bundle</a>
+                            </li>
                             
                         </ul>
 
                       </li>
                       
            
-                      <li><a href = "system_users.php">Users/Administrators</a></li>
+                      <li><a href = "#">User and Role</a></li>
                       <li><a href = "<?= site_url('login/logout')?>">Logout</a></li>
           
                    </ul>
@@ -103,3 +107,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>   
             
         </div>
+        <?php }
+        }
+        ?>
