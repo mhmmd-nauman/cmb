@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="row">
     <div class=" col-md-5 col-md-offset-1">
-        <h4>Course List</h4>
+        <h4>Department List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="<?= site_url('course/create')?>" class=" btn btn-success btn-small">Add New Course</a>
+        <a href="" class=" btn btn-success btn-small">Add New Department</a>
     </div>
 </div>
 <DIV class="row">
@@ -15,26 +15,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <table class="table table-bordered table-hover table-striped" id="myTable">
                 <thead>
                     <tr>
-                      <th class=" col-md-1">ID#</th>
-                      <th >Name</th>
-                     
-                      <th class=" col-md-3">Department</th>
-                      <th class=" col-md-1">Actions</th>
+                        <th class=" col-md-1">ID#</th>
+                        <th >Department</th>
+                        <th class=" col-md-1">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     
                     <?php 
                     //print_r($courses);
-                    foreach ($courses as $course_item):
+                    foreach ($departments as $item):
                         //print_r($course_item);
-                        $active_record = $course_item->course_id;
+                        $active_record = $item->department_id;
                     ?>
                     <tr >
-                      <td><?php echo $course_item->course_id;?></td>
+                      <td><?php echo $item->department_id;?></td>
                       
-                      <td><?php echo $course_item->course_title;?></td>
-                      <td><?php echo $departments[$course_item->deptID];?></td>
+                      <td><?php echo $item->department_title;?></td>
+                      
                       <td>
                           <div class = "dropdown pull-right">
    

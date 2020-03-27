@@ -1,6 +1,6 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h3>Welcome {User}</h3>
+            <h3>Welcome {<?php echo $this->session->userdata['username']?>}</h3>
         </div>
     </div>
 <br><hr>

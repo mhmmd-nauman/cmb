@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="row">
     <div class=" col-md-5 col-md-offset-1">
-        <h4>Course List</h4>
+        <h4>Course Material List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="<?= site_url('course/create')?>" class=" btn btn-success btn-small">Add New Course</a>
+        <a href="<?= site_url('cmb/create')?>" class=" btn btn-success btn-small">Upload Material</a>
     </div>
 </div>
 <DIV class="row">
@@ -15,26 +15,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <table class="table table-bordered table-hover table-striped" id="myTable">
                 <thead>
                     <tr>
-                      <th class=" col-md-1">ID#</th>
-                      <th >Name</th>
-                     
-                      <th class=" col-md-3">Department</th>
-                      <th class=" col-md-1">Actions</th>
+                        <th class=" col-md-1">ID#</th>
+                        <th >CMB</th>
+                        <th class=" col-md-3">Teacher</th>
+                        <th class=" col-md-3">Course</th>
+                        <th class=" col-md-1">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     
                     <?php 
                     //print_r($courses);
-                    foreach ($courses as $course_item):
+                    foreach ($cmbs as $item):
                         //print_r($course_item);
-                        $active_record = $course_item->course_id;
+                        $active_record = $item->cmb_id;
                     ?>
                     <tr >
-                      <td><?php echo $course_item->course_id;?></td>
+                      <td><?php echo $item->cmb_id;?></td>
                       
-                      <td><?php echo $course_item->course_title;?></td>
-                      <td><?php echo $departments[$course_item->deptID];?></td>
+                      <td><?php echo $item->cmb_title;?></td>
+                      <td><?php echo $users_array[$item->user_id];?></td>
+                      <td><?php echo $courses_array[$item->course_id];?></td>
                       <td>
                           <div class = "dropdown pull-right">
    
@@ -46,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                             
                                             <li role = "presentation">
-                                                <a  href="#" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1" data-toggle="modal" data-target="#viewDepartmentModal" ><span class="glyphicon glyphicon-edit" ></span> Edit Department</a>
+                                                <a target="_blank"  href="<?php echo site_url('cmb/download/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-download" ></span> Download</a>
                                             </li>
                                             
                                             

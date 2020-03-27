@@ -82,14 +82,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                          </a>
 
                          <ul class = "dropdown-menu">
-                            <li><a href = "receieved_apps_programs_wise.php">Manage Departments</a></li>
+                            <li><a href = "<?= site_url('department')?>">Manage Departments</a></li>
                             <li class = "divider"></li>
                             <li>
-                                <a href ="<?= site_url('course')?>"  >Manage Courses</a>
+                                <a href ="<?php echo site_url('course')?>"  >Manage Courses</a>
                             </li>
                            <li class = "divider"></li>
                             <li>
-                                <a href ="Manage Courses.php"  >Manage Course Material Bundle</a>
+                                <a href ="<?= site_url('cmb')?>"  > Manage Course Material Bundle</a>
                             </li>
                             
                         </ul>

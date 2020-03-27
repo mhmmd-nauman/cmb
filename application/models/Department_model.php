@@ -5,7 +5,7 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Course_model extends CI_Model
+class Department_model extends CI_Model
 {
     /**
      * Course constructor.
@@ -25,7 +25,7 @@ class Course_model extends CI_Model
      */
     public function find($id)
     {
-        return $this->db->get_where("courses", array("course_id" => $id))->row(0);
+        return $this->db->get_where("departments", array("department_id" => $id))->row(0);
     }
 
     /**
@@ -35,7 +35,7 @@ class Course_model extends CI_Model
      */
     public function all()
     {
-        return $this->db->get_where("courses")->result();
+        return $this->db->get_where("departments")->result();
 		//$query = $this->db->get_where('courses');
         //return $query->row_array();
     }
@@ -50,7 +50,7 @@ class Course_model extends CI_Model
     {
         
 
-        return $this->db->insert('courses', $data);
+        return $this->db->insert('departments', $data);
     }
 
     /**
@@ -61,7 +61,7 @@ class Course_model extends CI_Model
      */
     public function edit($data)
     {
-        return $this->db->update('courses', $data, array('course_id' => $data['course_id']));
+        return $this->db->update('departments', $data, array('department_id' => $data['department_id']));
     }
 
     /**
@@ -74,19 +74,6 @@ class Course_model extends CI_Model
     {
         
 
-        return $this->find($id) ? $this->db->update('courses', $data, array('course_id' => $id)) : 0;
-    }
-    public function set_course()
-    {
-        $this->load->helper('url');
-
-        
-
-        $data = array(
-            'course_title' => $this->input->post('course_title'),
-            'deptID' => $this->input->post('deptID')
-        );
-
-        return $this->db->insert('courses', $data);
+        return $this->find($id) ? $this->db->update('departments', $data, array('department_id' => $id)) : 0;
     }
 }
