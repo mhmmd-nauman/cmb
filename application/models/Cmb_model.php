@@ -83,7 +83,7 @@ class Cmb_model extends CI_Model
         
 
         $data = array(
-            'cmb_title' => $this->session->userdata['username'],
+            'cmb_title' => $this->session->userdata['username'].$data_upload['upload_data']['file_ext'],
             'deptID' => 0,
             'file_type'=>$data_upload['upload_data']['file_type'],
             'user_id' => $this->session->userdata['userID'],

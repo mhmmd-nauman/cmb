@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller
+class Client extends CI_Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -15,8 +15,8 @@ class Home extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('auth');
-        $this->auth->route_access();
+        //$this->load->library('auth');
+       // $this->auth->route_access();
         $this->load->model('cmb_model');
         $this->load->model('department_model');
         $this->load->model('course_model');
@@ -42,8 +42,9 @@ class Home extends CI_Controller
         $data['departments'] = $this->department_model->all();
         $courses = $this->course_model->all();
         $data['courses'] = $courses;
+        $data['cmbs'] = $cmbs;
         $data['title'] = 'Home';
-        $this->load->view('header',$data);
-        $this->load->view('home',$data);
+        $this->load->view('header_client',$data);
+        $this->load->view('client',$data);
     }
 }

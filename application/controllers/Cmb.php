@@ -110,7 +110,7 @@ class Cmb extends CI_Controller
                     //print_r($data_upload);
                     $this->cmb_model->set_cmb($data_upload);
                     $this->load->view('header', $data);
-                    $this->load->view('create_cmb', $data);
+                    $this->load->view('success_cmb', $data);
                     
             }
             
@@ -124,6 +124,9 @@ class Cmb extends CI_Controller
     public function download($id)
     {
         $file=$this->cmb_model->find($id);
+        // increament the counter downloaded
+       // downloaded
+        $this->cmb_model->edit(array("downloaded"=>$file->downloaded+1,"cmb_id"=>$id));
         $this->load->helper('download');
         $data = file_get_contents(base_url("./".$file->file_path));
         force_download($file->cmb_title, $data);

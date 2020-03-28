@@ -40,7 +40,7 @@ class Login extends CI_Controller
     public function index()
     {
         $data = array();
-
+        $this->db->insert('visits', array("ip"=>$_SERVER['REMOTE_ADDR'],"visit_date"=>date("Y-m-d h:i:s")));
         if($_POST) {
             $data = $this->auth->login($_POST);
         }

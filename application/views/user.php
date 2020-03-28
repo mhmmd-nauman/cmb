@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="row">
     <div class=" col-md-5 col-md-offset-1">
-        <h4>Course List</h4>
+        <h4>User List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="<?= site_url('course/create')?>" class=" btn btn-success btn-small">Add New Course</a>
+        <a href="" class=" btn btn-success btn-small">Add New User</a>
     </div>
 </div>
 <DIV class="row">
@@ -15,26 +15,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <table class="table table-bordered table-hover table-striped" id="myTable">
                 <thead>
                     <tr>
-                      <th class=" col-md-1">ID#</th>
-                      <th >Name</th>
-                     
-                      <th class=" col-md-3">Department</th>
-                      <th class=" col-md-1">Actions</th>
+                        <th class=" col-md-1">ID#</th>
+                        <th>Name</th>
+                        <th class="col-md-2">Role</th>
+                        <th class=" col-md-1">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     
                     <?php 
                     //print_r($courses);
-                    foreach ($courses as $course_item):
+                    foreach ($users as $item):
                         //print_r($course_item);
-                        $active_record = $course_item->course_id;
+                        $active_record = $item->id;
+                        //print_r($user_roles);
                     ?>
                     <tr >
-                      <td><?php echo $course_item->course_id;?></td>
+                      <td><?php echo $item->id;?></td>
                       
-                      <td><?php echo $course_item->course_title;?></td>
-                      <td><?php echo $departments[$course_item->deptID];?></td>
+                      <td><?php echo $item->name;?></td>
+                      <td><?php 
+                      if(key_exists($item->id,$user_roles)){
+                            foreach($user_roles[$item->id] as $role)echo$role.",";
+                      }
+                      ?></td>
                       <td>
                           <div class = "dropdown pull-right">
    
@@ -46,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                             
                                             <li role = "presentation">
-                                                <a  href="#" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1" data-toggle="modal" data-target="#viewDepartmentModal" ><span class="glyphicon glyphicon-edit" ></span> Edit </a>
+                                                <a  href="#" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1" data-toggle="modal" data-target="#viewDepartmentModal" ><span class="glyphicon glyphicon-edit" ></span> Edit</a>
                                             </li>
                                             
                                             

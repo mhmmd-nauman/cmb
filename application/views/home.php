@@ -6,17 +6,17 @@
 <br><hr>
       <div class="row">
          <div class="col-md-2 col-md-offset-2">
-             <b> Departments</b>: <button class="btn btn-info btn-block">101</button> 
+             <b> Departments</b>: <button class="btn btn-info btn-block"><?php echo count($departments);?></button> 
          </div>
          <div class="col-md-2">
-             <b> Courses</b>: <button class="btn btn-info btn-block">33</button> 
+             <b> Courses</b>: <button class="btn btn-info btn-block"><?php echo count($courses);?></button> 
          </div>
       
          <div class="col-md-2 ">
-             <b> Downloads</b>: <button class="btn btn-info btn-block">1</button> 
+             <b> Downloads</b>: <button class="btn btn-info btn-block"><?php echo $downloaded;?></button> 
          </div>
          <div class="col-md-2">
-             <b> User visits</b>: <button class="btn btn-info btn-block">44</button>  
+             <b> User visits</b>: <button class="btn btn-info btn-block"><?php echo $visits;?></button>  
          </div>
          
     </div>

@@ -44,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                             
                                             <li role = "presentation">
-                                                <a  href="#" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1" data-toggle="modal" data-target="#viewDepartmentModal" ><span class="glyphicon glyphicon-edit" ></span> Edit Department</a>
+                                                <a  href="#" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1" data-toggle="modal" data-target="#viewDepartmentModal" ><span class="glyphicon glyphicon-edit" ></span> Edit</a>
                                             </li>
                                             
                                             
