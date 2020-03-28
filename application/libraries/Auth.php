@@ -140,6 +140,7 @@ class Auth
         $this->CI->session->set_userdata(array(
             "userID" => $this->user->id,
             "username" => $this->user->username,
+            "name" => $this->user->name,
             "roles" => $this->userWiseRoles(),
             "loginStatus" => true
         ));

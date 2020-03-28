@@ -23,6 +23,7 @@ class Users extends CI_Controller
         $this->load->model('user');
         $this->load->model('role');
         $this->load->helper('url_helper');
+        $this->load->model('department_model');
     }
 
     /**
@@ -44,8 +45,60 @@ class Users extends CI_Controller
         }
        // print_r($user_roles[1]);
         $data['user_roles'] = $user_roles_data;
+        // departments
+        
+        $departments = $this->department_model->all();
+        foreach($departments as $dpt){
+            $data_dpt[$dpt->department_id] = $dpt->department_title;
+        }
+       
+        $data['departments'] = $data_dpt;
+        
         $data['title'] = 'Users';
         $this->load->view('header',$data);
         $this->load->view('user',$data);
+    }
+    public function create()
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $data['title'] = 'Enter user information';
+
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('deptID', 'deptID', 'required');
+        $this->form_validation->set_rules('name', 'name', 'required');
+        $this->form_validation->set_rules('username', 'username', 'required');
+        $this->form_validation->set_rules('password', 'password', 'required');
+        
+        
+        $user_data['email'] = $this->input->post('email');
+        $user_data['deptID'] = $this->input->post('deptID');
+        $user_data['name'] = $this->input->post('name');
+        $user_data['username'] = $this->input->post('username');
+        $user_data['password'] = $this->input->post('password');
+        
+        if ($this->form_validation->run() === FALSE)
+        {
+            $data['departments'] = $this->department_model->all();
+            
+            
+            $data['users'] = $this->user->all();
+            $this->load->view('header', $data);
+            $this->load->view('create_users',$data);
+            
+
+        }
+        else
+        {
+            $this->user->add($user_data);
+            $user_data = $this->user->find_with_email($this->input->post('email'));
+           // print_r($user_data);
+            $roles = array("2"); // add teacher role by default for now
+            
+            $this->user->addRoles($user_data->id, $roles);
+            $this->load->view('header', $data);
+            $this->load->view('success_user');
+        }
     }
 }

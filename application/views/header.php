@@ -75,6 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 <div>
                    <ul class = "nav navbar-nav">
+                      <?php if(in_array("1", $this->session->userdata['roles'])){?> 
                       <li class = "dropdown">
                          <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
                             CMB Manager 
@@ -102,6 +103,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            
                       <li><a href = "<?= site_url('users')?>">Users</a></li>
                       <li><a href = "#">User Roles</a></li>
+                      <?php } ?>
                       <li><a href = "<?= site_url('login/logout')?>">Logout</a></li>
           
                    </ul>

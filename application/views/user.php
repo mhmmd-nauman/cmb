@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4>User List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="" class=" btn btn-success btn-small">Add New User</a>
+        <a href="<?= site_url('users/create')?>" class=" btn btn-success btn-small">Add New User</a>
     </div>
 </div>
 <DIV class="row">
@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <tr >
                       <td><?php echo $item->id;?></td>
                       
-                      <td><?php echo $item->name;?></td>
+                      <td><?php echo $item->name;?><br><?php echo $item->email;?></td>
                       <td><?php 
                       if(key_exists($item->id,$user_roles)){
                             foreach($user_roles[$item->id] as $role)echo$role.",";
