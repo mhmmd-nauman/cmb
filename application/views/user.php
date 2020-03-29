@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4>User List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="<?= site_url('users/create')?>" class=" btn btn-success btn-small">Add New User</a>
+        <a href="<?= site_url('users/create')?>" class=" btn btn-success btn-small">Add New Department</a>
     </div>
 </div>
 <DIV class="row">
@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <thead>
                     <tr>
                         <th class=" col-md-1">ID#</th>
+                        <th class=" col-md-1">Login</th>
                         <th>Name</th>
                         <th class="col-md-2">Role</th>
                         <th class=" col-md-1">Actions</th>
@@ -32,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     ?>
                     <tr >
                       <td><?php echo $item->id;?></td>
-                      
+                      <td><?php echo $item->username;?></td>
                       <td><?php echo $item->name;?><br><?php echo $item->email;?></td>
                       <td><?php 
                       if(key_exists($item->id,$user_roles)){

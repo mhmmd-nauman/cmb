@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4>Course Material List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="<?= site_url('cmb/create')?>" class=" btn btn-success btn-small">Upload Material</a>
+        <a href="<?= site_url('cmb/create')?>" class=" btn btn-success btn-small">Upload CMB Material</a>
     </div>
 </div>
 <DIV class="row">
@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <tr>
                         <th class=" col-md-1">ID#</th>
                         <th >CMB</th>
-                        <th class=" col-md-3">Teacher</th>
+                        <th class=" col-md-3">Department</th>
                         <th class=" col-md-3">Course</th>
                         <th class=" col-md-1">Actions</th>
                     </tr>
@@ -26,6 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     
                     <?php 
                     //print_r($courses);
+                    if(count((array)$cmbs)>0){
                     foreach ($cmbs as $item):
                         //print_r($course_item);
                         $active_record = $item->cmb_id;
@@ -59,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </td>
                     </tr>
                     <?php endforeach; ?>
-                   
+                    <?php } ?>
                     
                 </tbody>
             </table>

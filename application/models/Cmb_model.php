@@ -27,6 +27,10 @@ class Cmb_model extends CI_Model
     {
         return $this->db->get_where("cmb", array("cmb_id" => $id))->row(0);
     }
+    public function findby_user($id)
+    {
+        return $this->db->get_where("cmb", array("user_id" => $id))->result();
+    }
 
     /**
      * Find all data.
@@ -83,7 +87,7 @@ class Cmb_model extends CI_Model
         
 
         $data = array(
-            'cmb_title' => $this->session->userdata['name'].$data_upload['upload_data']['file_ext'],
+            'cmb_title' => $this->input->post('cmb_title').$data_upload['upload_data']['file_ext'],
             'deptID' => 0,
             'file_type'=>$data_upload['upload_data']['file_type'],
             'user_id' => $this->session->userdata['userID'],

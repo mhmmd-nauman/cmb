@@ -30,18 +30,39 @@ class Client extends CI_Controller
      */
     public function index()
     {
-        $cmbs = $this->cmb_model->all();
-        $d = 0;
-        foreach($cmbs as $cmb){
-            $d = $d+$cmb->downloaded;
+        
+       
+        $data['users'] = $this->user->all();
+        $user_data = array();
+        $cmb_data = array();
+        $courses_data = array();
+        $course_title_data = array();
+        foreach($data['users'] as $user){
+         // print_r($user->id);
+          
+          if(in_array("3", $this->user->userWiseRoles($user->id))){
+              $user_data[] = $user;
+              $cmb_data[$user->id] = $this->cmb_model->findby_user($user->id);
+              foreach($cmb_data[$user->id] as $cmb){
+                  $course_title_data = $this->course_model->find($cmb->course_id);
+                 // print_r($course_title_data);
+                  $courses_data[$user->id][$cmb->course_id] = $course_title_data->course_title;
+              }
+          }
+          
         }
-        $visits = $this->db->get_where("visits")->result();
-        $v = count($visits);
-        $data['visits'] = $v;
-        $data['downloaded'] = $d;
-        $data['departments'] = $this->department_model->all();
+        $data['cmb_data'] =$cmb_data;
+        $data['courses_data'] =$courses_data;
+        //print_r($cmb_data);
+        //print_r($courses_data);
+        $data['users'] =$user_data;
+        //
         $courses = $this->course_model->all();
         $data['courses'] = $courses;
+        $cmbs = $this->cmb_model->all();
+        foreach($cmbs as $cmb){
+            
+        }
         $data['cmbs'] = $cmbs;
         $data['title'] = 'Home';
         $this->load->view('header_client',$data);

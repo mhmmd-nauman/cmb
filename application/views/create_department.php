@@ -8,12 +8,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('users/create'); ?>
+<?php echo form_open('department/create'); ?>
 
     
     <div class="form-group">
-        <label for="email">Name:</label>
-        <input name="name" type="text" class="form-control" id="name">
+        <label for="email">Title:</label>
+        <input name="course_title" type="text" class="form-control" id="course_title">
     </div>
     <div class="form-group">
         <label for="email">Email:</label>
@@ -27,7 +27,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <label for="email">Password:</label>
         <input name="password" type="text" class="form-control" id="password">
     </div>
-    
     
 
     <button type="submit" class="btn btn-primary">Submit</button>

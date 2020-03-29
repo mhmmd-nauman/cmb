@@ -24,11 +24,11 @@
 <?php } else {?>
 <div class="row">
         <div class="col-md-2 col-md-offset-3">
-            <a href="<?= site_url('cmb')?>" class=" btn btn-success btn-small">Manage CMB List</a>    
+            <a href="<?= site_url('cmb')?>" class=" btn btn-success btn-small">Manage CMBs</a>    
          
         </div>
         <div class="col-md-2 col-md-offset-1">
-            <a href="<?= site_url('course')?>" class=" btn btn-success btn-small">Manage Course List</a>    
+            <a href="<?= site_url('course')?>" class=" btn btn-success btn-small">Manage Courses</a>    
          
         </div>
         </div>

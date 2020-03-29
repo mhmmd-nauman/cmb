@@ -34,7 +34,8 @@ class Cmb extends CI_Controller
      */
     public function index()
     {
-        $data['cmbs'] = $this->cmb_model->all();
+        //user_id = $this->session->userdata['userID']
+        $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
         $data['title'] = 'CMB';
         
         $departments = $this->department_model->all();
@@ -74,7 +75,7 @@ class Cmb extends CI_Controller
         
         $data['title'] = 'Upload Course Material Bundle';
         //print_r($data);
-        //$this->form_validation->set_rules('userfile', 'Title', 'required');
+        $this->form_validation->set_rules('cmb_title', 'Teacher', 'required');
         $this->form_validation->set_rules('course_id', 'course_id', 'required');
 
         if ($this->form_validation->run() === FALSE)
@@ -106,7 +107,8 @@ class Cmb extends CI_Controller
             else
             {
                     $data_upload = array('upload_data' => $this->upload->data());
-                    rename( "./uploads/".$data_upload['upload_data']['file_name'], "./uploads/".$this->input->post('course_id')."-".$this->session->userdata['username'].$data_upload['upload_data']['file_ext']);
+                    // $this->input->post('cmb_title')
+                    rename( "./uploads/".$data_upload['upload_data']['file_name'], "./uploads/".$this->input->post('course_id')."-".$this->input->post('cmb_title').$data_upload['upload_data']['file_ext']);
                     //print_r($data_upload);
                     $this->cmb_model->set_cmb($data_upload);
                     $this->load->view('header', $data);

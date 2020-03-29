@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4>Department List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="" class=" btn btn-success btn-small">Add New Department</a>
+        <a href="<?= site_url('department/create')?>" class=" btn btn-success btn-small">Add New Department</a>
     </div>
 </div>
 <DIV class="row">

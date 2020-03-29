@@ -3,7 +3,9 @@
             <h3>Welcome dear students</h3>
         </div>
         <div class="col-md-2 col-md-offset-1">
+            <!--
             <a target="_blank"  class="btn btn-primary btn-small" href="<?php echo site_url('login')?>"     tabindex = "-1"  > Teacher Login</a>
+            -->
         </div>
     </div>
     <div class="row">
@@ -15,24 +17,32 @@
         </div>
     </div>
 <br><hr>
-<?php foreach ($departments as $item1): ?>
+<?php foreach ($users as $dpt): 
+    
+    ?>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
        <ul>
            <li>
              
-             <?php print( $item1->department_title);?>
-         
-             <?php foreach ($courses as $item2): ?>
+             <?php print( $dpt->name);?>
+             <?php // print( $dpt->id);?>
+             <?php 
+             if(key_exists($dpt->id, $courses_data)){
+             foreach ($courses_data[$dpt->id] as $course_id=>$course_title): 
+                // print_r($courses_data[$dpt->id]);
+                 ?>
              <ul>
                 <?php 
-                if($item1->department_id == $item2->deptID){ ?>
+                //if($item1->id == $item2->course_id){ ?>
                  <li>
-                     <?php print( $item2->course_title); ?>
+                     <?php print( $course_title); ?>
                      <ul>
-                        <?php foreach ($cmbs as $item3): ?>
+                        <?php foreach ($cmb_data[$dpt->id] as $item3): 
+                           // print_r($cmb_data[$dpt->id]);
+                            ?>
                          <?php 
-                             if($item2->course_id == $item3->course_id){ ?>   
+                             if($course_id == $item3->course_id){ ?>   
                                 <li> 
                                     <a target="_blank"  href="<?php echo site_url('cmb/download/'.$item3->cmb_id)?>"     tabindex = "-1"  ><span class="glyphicon glyphicon-download" ></span> <?php print( $item3->cmb_title); ?></a>
                                 </li>
@@ -41,10 +51,12 @@
                          <?php endforeach; ?>
                      </ul>
                  </li>
-              <?php  }
+              <?php  //}
                 ?>
              </ul>
-             <?php endforeach; ?>
+             <?php endforeach; 
+             }
+             ?>
          </li>
         
     </ul>

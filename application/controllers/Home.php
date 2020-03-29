@@ -43,7 +43,7 @@ class Home extends CI_Controller
         $v = count($visits);
         $data['visits'] = $v;
         $data['downloaded'] = $d;
-        $data['departments'] = $this->department_model->all();
+        $data['departments'] = $this->user->all();
         $courses = $this->course_model->all();
         $data['courses'] = $courses;
         $data['title'] = 'Home';

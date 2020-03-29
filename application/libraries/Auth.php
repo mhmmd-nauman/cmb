@@ -122,7 +122,7 @@ class Auth
      */
     protected function credentials($username, $password)
     {
-        $user = $this->CI->db->get_where("users", array("username" => $username, "status" => 1, "deleted_at" => null))->row(0);
+        $user = $this->CI->db->get_where("users", array("username" => $username, "status" => 1))->row(0);
         if($user && password_verify($password, $user->password)) {
             return $user;
         }

@@ -48,7 +48,7 @@ class User extends CI_Model
      */
     public function all()
     {
-        return $this->db->get_where("users", array("deleted_at" => null))->result();
+        return $this->db->get_where("users")->result();
     }
 
     /**

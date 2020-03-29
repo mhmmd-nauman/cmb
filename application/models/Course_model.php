@@ -39,7 +39,7 @@ class Course_model extends CI_Model
 		//$query = $this->db->get_where('courses');
         //return $query->row_array();
     }
-
+    
     /**
      * Insert data.
      *

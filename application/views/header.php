@@ -54,7 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">	
             <div class="col-md-12 text-center">
                 
-                <h3> CMB Repository</h3>
+                <h3> Course Material Bundle Repository</h3>
                 </a>
             </div>						
         </div>
@@ -76,6 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div>
                    <ul class = "nav navbar-nav">
                       <?php if(in_array("1", $this->session->userdata['roles'])){?> 
+                       <!--
                       <li class = "dropdown">
                          <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
                             CMB Manager 
@@ -99,10 +100,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </ul>
 
                       </li>
-                      
-           
-                      <li><a href = "<?= site_url('users')?>">Users</a></li>
-                      <li><a href = "#">User Roles</a></li>
+                       -->
+                      <li>
+                            <a href ="<?= site_url('cmb')?>"  >Course Material Bundles</a>
+                        </li>
+                      <li>
+                        <a href ="<?php echo site_url('course')?>"  > Courses</a>
+                      </li>
+                      <li><a href = "<?= site_url('users')?>">Departments</a></li>
+                      <li><a href = "#">Roles</a></li>
                       <?php } ?>
                       <li><a href = "<?= site_url('login/logout')?>">Logout</a></li>
           

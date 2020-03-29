@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <th class=" col-md-1">ID#</th>
                       <th >Name</th>
                      
-                      <th class=" col-md-3">Department</th>
+                      
                       <th class=" col-md-1">Actions</th>
                     </tr>
                 </thead>
@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <td><?php echo $course_item->course_id;?></td>
                       
                       <td><?php echo $course_item->course_title;?></td>
-                      <td><?php echo $departments[$course_item->deptID];?></td>
+                     <!-- <td><?php //echo $departments[$course_item->deptID];?></td> -->
                       <td>
                           <div class = "dropdown pull-right">
    

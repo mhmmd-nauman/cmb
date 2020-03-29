@@ -36,4 +36,30 @@ class Department extends CI_Controller
         $this->load->view('header',$data);
         $this->load->view('department',$data);
     }
+    public function create()
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $data['title'] = 'Enter new department information';
+
+        $this->form_validation->set_rules('course_title', 'Title', 'required');
+        $this->form_validation->set_rules('deptID', 'deptID', 'required');
+
+        if ($this->form_validation->run() === FALSE)
+        {
+            $data['departments'] = $this->department_model->all();
+            $this->load->view('header', $data);
+            $this->load->view('create_department',$data);
+            
+
+        }
+        else
+        {
+            $dpt_data[''] = $this->input->post('course_title');
+            $this->department_model->add($dpt_data);
+            $this->load->view('header', $data);
+            $this->load->view('success');
+        }
+    }
 }

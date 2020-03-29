@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>CMB</title>
+  <title>Course Material Bundle - IUB</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -54,7 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">	
             <div class="col-md-12 text-center">
                 
-                <h3> CMB Repository</h3>
+                <h3> Course Material Bundle Repository</h3>
                 </a>
             </div>						
         </div>
