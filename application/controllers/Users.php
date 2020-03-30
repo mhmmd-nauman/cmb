@@ -31,6 +31,25 @@ class Users extends CI_Controller
      *
      * @return mixed
      */
+    function outputCSV($data) {
+        $output = fopen("php://output", "w");
+        foreach ($data as $row) {
+            fputcsv($output, $row); // here you can change delimiter/enclosure
+        }
+        fclose($output);
+    }
+    public function changepassword(){
+        $csvFile = fopen("users.csv", 'r');
+        while(($line = fgetcsv($csvFile)) !== FALSE){
+            //print_r($line);
+            $user_data['id'] = $line[0];
+            $password = $line[5];
+            $user_data["password"] = password_hash($password, PASSWORD_BCRYPT);
+            $this->user->edit($user_data);
+           // break;
+        }
+        
+    }
     public function index()
     {
         $data['users'] = $this->user->all();

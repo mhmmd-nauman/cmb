@@ -45,11 +45,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            <span class = "caret"></span>
                                         </button>
                                         <ul class = "dropdown-menu" role = "menu" aria-labelledby = "dropdownMenu_actions">
-                                            
-                                            
+                                            <li role = "presentation">
+                                                <a   href="<?php echo site_url('cmb/edit/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-edit" ></span> Edit</a>
+                                            </li>
+                                            <li class = "divider"></li>
+                                            <li role = "presentation">
+                                                <a   href="<?php echo site_url('cmb/delete/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-remove" ></span> Delete</a>
+                                            </li>
+                                            <li class = "divider"></li>
                                             <li role = "presentation">
                                                 <a target="_blank"  href="<?php echo site_url('cmb/download/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-download" ></span> Download</a>
                                             </li>
+                                            
                                             
                                             
                                             

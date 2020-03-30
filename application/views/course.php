@@ -46,9 +46,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                             
                                             <li role = "presentation">
-                                                <a  href="#" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1" data-toggle="modal" data-target="#viewDepartmentModal" ><span class="glyphicon glyphicon-edit" ></span> Edit </a>
+                                                <a  href="<?php echo site_url('course/edit/'.$course_item->course_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"   ><span class="glyphicon glyphicon-edit" ></span> Edit </a>
                                             </li>
-                                            
+                                            <li class = "divider"></li>
+                                            <li role = "presentation">
+                                                <a   href="<?php echo site_url('course/delete/'.$course_item->course_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-remove" ></span> Delete</a>
+                                            </li>
                                             
                                             
                                             

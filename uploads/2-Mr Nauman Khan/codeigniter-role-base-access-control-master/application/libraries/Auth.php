@@ -40,7 +40,7 @@ class Auth
     public function __construct()
     {
         $this->CI =& get_instance();
-        
+
         $this->init();
     }
 
@@ -67,8 +67,7 @@ class Auth
      */
     public function showLoginForm($data = array())
     {
-        $this->CI->load->view("header", $data);
-        $this->CI->load->view("auth/login", $data);
+        return $this->CI->load->view("auth/login", $data);
     }
 
     /**
@@ -122,7 +121,7 @@ class Auth
      */
     protected function credentials($username, $password)
     {
-        $user = $this->CI->db->get_where("users", array("username" => $username, "status" => 1))->row(0);
+        $user = $this->CI->db->get_where("users", array("username" => $username, "status" => 1, "deleted_at" => null))->row(0);
         if($user && password_verify($password, $user->password)) {
             return $user;
         }
@@ -140,7 +139,6 @@ class Auth
         $this->CI->session->set_userdata(array(
             "userID" => $this->user->id,
             "username" => $this->user->username,
-            "name" => $this->user->name,
             "roles" => $this->userWiseRoles(),
             "loginStatus" => true
         ));

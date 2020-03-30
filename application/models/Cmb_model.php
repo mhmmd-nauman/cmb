@@ -92,7 +92,7 @@ class Cmb_model extends CI_Model
             'file_type'=>$data_upload['upload_data']['file_type'],
             'user_id' => $this->session->userdata['userID'],
             'course_id' => $this->input->post('course_id'),
-            'file_path' => "uploads/".$this->input->post('course_id')."-".$this->session->userdata['username'].$data_upload['upload_data']['file_ext']
+            'file_path' => $data_upload['upload_data']['file_path']
         );
 
         return $this->db->insert('cmb', $data);

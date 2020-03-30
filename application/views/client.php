@@ -1,69 +1,79 @@
-    <div class="row">
-        <div class="col-md-6 col-md-offset-2">
-            <h3>Welcome dear students</h3>
+ <main role="main">
+
+      <div class="jumbotron" style="padding-top: 120px; background-color: #2B357C;">
+        <div class="container">
+          <h1 class="display-3 text-white">Welcome Students!</h1>
+          <p style="color:#E5AC39;"><b>Course Material Bundle Repository</b>&nbsp;Search and Select department / course / teacher name to download the study material in zip file.</p>
+           <input class="form-control" id="anything" type="text" placeholder="Search Department / Course / Teacher">
         </div>
-        <div class="col-md-2 col-md-offset-1">
-            <!--
-            <a target="_blank"  class="btn btn-primary btn-small" href="<?php echo site_url('login')?>"     tabindex = "-1"  > Teacher Login</a>
-            -->
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <p>
-                Click on the zip file names to download the material for departments respectively. 
-            </p>
-            
-        </div>
-    </div>
-<br><hr>
-<?php foreach ($users as $dpt): 
-    
-    ?>
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-       <ul>
-           <li>
+      </div>    
+
+
+<?php foreach ($users as $dpt):?>
+
+ <div class="container" id="data">
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title"><a class="btn bg-light w-100 text-left" data-toggle="collapse" href="#economics"><?php print( $dpt->name);?></a></h4></div>
              
-             <?php print( $dpt->name);?>
              <?php // print( $dpt->id);?>
              <?php 
              if(key_exists($dpt->id, $courses_data)){
+
              foreach ($courses_data[$dpt->id] as $course_id=>$course_title): 
                 // print_r($courses_data[$dpt->id]);
                  ?>
-             <ul>
+
+
+                  <div id="economics" class="panel-collapse collapse">
+              <!-- 2nd level List -->
+              <ul class="list-group">
+                
                 <?php 
                 //if($item1->id == $item2->course_id){ ?>
-                 <li>
-                     <?php print( $course_title); ?>
-                     <ul>
+
+                     <a data-toggle="collapse" href="#subject1"><li class="list-group-item"><?php print( $course_title); ?></li></a>
+                      
+                 <div id="subject1" class="panel-collapse collapse">
+                        <!-- 3nd level List of subject 1 accounting -->
+                        <ul class="list-group">
                         <?php foreach ($cmb_data[$dpt->id] as $item3): 
                            // print_r($cmb_data[$dpt->id]);
                             ?>
                          <?php 
                              if($course_id == $item3->course_id){ ?>   
-                                <li> 
+                                <li class="list-group-item"> 
                                     <a target="_blank"  href="<?php echo site_url('cmb/download/'.$item3->cmb_id)?>"     tabindex = "-1"  ><span class="glyphicon glyphicon-download" ></span> <?php print( $item3->cmb_title); ?></a>
                                 </li>
                             <?php  }
                             ?>
                          <?php endforeach; ?>
                      </ul>
-                 </li>
+                 </div>
               <?php  //}
                 ?>
              </ul>
+         </div>
              <?php endforeach; 
              }
              ?>
-         </li>
         
-    </ul>
     </div>
 </div>
+</div>
 <?php endforeach; ?>
-    </div>
+ </main>
+
+
+
+ <footer class="text-muted text-white mt-5 p-2" style="background-color: #2B357C;">
+      <div class="container">
+        <p class="float-right">
+          <a href="#anything">Back to top</a>
+        </p>
+        <p>Course Material Bundle Repository @ iub</p>
+      </div>
+    </footer>
 </body>
 </html>
-

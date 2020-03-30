@@ -8,12 +8,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('course/create'); ?>
+<?php echo form_open('course/edit/'. $course->course_id); ?>
 
     
     <div class="form-group">
         <label for="email">Title:</label>
-        <input name="course_title" type="text" class="form-control" id="course_title">
+        <input value="<?php echo $course->course_title; ?>" name="course_title" type="text" class="form-control" id="course_title">
     </div>
     <!--
     <div class="form-group">

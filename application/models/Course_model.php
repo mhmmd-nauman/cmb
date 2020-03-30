@@ -27,6 +27,11 @@ class Course_model extends CI_Model
     {
         return $this->db->get_where("courses", array("course_id" => $id))->row(0);
     }
+    
+    public function find_by_dpt($id)
+    {
+        return $this->db->get_where("courses", array("user_id" => $id))->result();
+    }
 
     /**
      * Find all data.
@@ -84,7 +89,7 @@ class Course_model extends CI_Model
 
         $data = array(
             'course_title' => $this->input->post('course_title'),
-            'deptID' => $this->input->post('deptID')
+            'user_id' => $this->session->userdata['userID']
         );
 
         return $this->db->insert('courses', $data);

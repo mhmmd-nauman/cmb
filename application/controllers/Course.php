@@ -32,13 +32,18 @@ class Course extends CI_Controller
      */
     public function index()
     {
-        $data['courses'] = $this->course_model->all();
-        $departments = $this->department_model->all();
-        foreach($departments as $dpt){
-            $data_dpt[$dpt->department_id] = $dpt->department_title;
+        if(in_array("1", $this->session->userdata['roles'])){
+            $data['courses'] = $this->course_model->all();
+        }else{
+            //print_r($this->session->userdata);
+            $data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
         }
+       // $departments = $this->department_model->all();
+        //foreach($departments as $dpt){
+           // $data_dpt[$dpt->department_id] = $dpt->department_title;
+      //  }
        
-        $data['departments'] = $data_dpt;
+        //$data['departments'] = $data_dpt;
         $data['title'] = 'Course';
         $this->load->view('header',$data);
         $this->load->view('course',$data);
@@ -51,7 +56,7 @@ class Course extends CI_Controller
         $data['title'] = 'Enter new course information';
 
         $this->form_validation->set_rules('course_title', 'Title', 'required');
-        $this->form_validation->set_rules('deptID', 'deptID', 'required');
+       // $this->form_validation->set_rules('deptID', 'deptID', 'required');
 
         if ($this->form_validation->run() === FALSE)
         {
@@ -64,6 +69,34 @@ class Course extends CI_Controller
         else
         {
             $this->course_model->set_course();
+            $this->load->view('header', $data);
+            $this->load->view('success');
+        }
+    }
+    public function edit($id)
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $data['title'] = 'Update course information';
+
+        $this->form_validation->set_rules('course_title', 'Title', 'required');
+       // $this->form_validation->set_rules('deptID', 'deptID', 'required');
+
+        if ($this->form_validation->run() === FALSE)
+        {
+            $data['course'] = $this->course_model->find($id);
+            //$data['departments'] = $this->department_model->all();
+            $this->load->view('header', $data);
+            $this->load->view('edit_course',$data);
+            
+
+        }
+        else
+        {
+            $update_data['course_id'] = $id;
+            $update_data['course_title'] = $this->input->post('course_title');   
+            $this->course_model->edit($update_data);
             $this->load->view('header', $data);
             $this->load->view('success');
         }

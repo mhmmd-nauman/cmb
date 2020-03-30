@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>CMB</title>
+  <title>Course Material Bundle - IUB</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -59,68 +59,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>						
         </div>
         <BR>
-        <?php 
-        //print_r($this->session->userdata["userID"]);
-        if(isset($this->session->userdata["userID"])){
-            
-        
-        if ($this->session->userdata["userID"]) {?>
-        <div class="row">
-            <div class=" col-md-10 col-md-offset-1">
-                <nav class = "navbar navbar-default" role = "navigation" >
-   
-                <div class = "navbar-header">
-                   <a class = "navbar-brand" href = "<?php echo site_url('home');?>">IUB CMB Repository</a>
-                </div>
-
-                <div>
-                   <ul class = "nav navbar-nav">
-                      <?php if(in_array("1", $this->session->userdata['roles'])){?> 
-                       <!--
-                      <li class = "dropdown">
-                         <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
-                            CMB Manager 
-                            <b class = "caret"></b>
-                         </a>
-
-                         <ul class = "dropdown-menu">
-                            <li>
-                                <a href ="<?= site_url('cmb')?>"  > Manage Course Material Bundle</a>
-                            </li>
-                            <li class = "divider"></li>
-                            <li>
-                                <a href ="<?php echo site_url('course')?>"  >Manage Courses</a>
-                            </li>
-                            <li class = "divider"></li>
-                            <li><a href = "<?= site_url('department')?>">Manage Departments</a></li>
-                            
-                           
-                            
-                            
-                        </ul>
-
-                      </li>
-                       -->
-                      
-                      
-                      <li><a href = "<?= site_url('users')?>">Departments</a></li>
-                      <li><a href = "#">Roles</a></li>
-                      <?php } ?>
-                      <li>
-                            <a href ="<?= site_url('cmb')?>"  >Course Material Bundles</a>
-                      </li>
-                      <li>
-                        <a href ="<?php echo site_url('course')?>"  > Courses</a>
-                      </li>
-                      <li><a href = "<?= site_url('login/logout')?>">Logout</a></li>
-          
-                   </ul>
-                </div>
-
-             </nav>
-            </div>   
-            
-        </div>
-        <?php }
-        }
-        ?>
+       
