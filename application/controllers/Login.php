@@ -32,6 +32,7 @@ class Login extends CI_Controller
         parent::__construct();
         $this->load->database();
         $this->load->library(['auth', 'form_validation']);
+        $this->load->helper('captcha');
     }
 
     /**
@@ -44,7 +45,37 @@ class Login extends CI_Controller
         if($_POST) {
             $data = $this->auth->login($_POST);
         }
+        $vals = array(
+               // 'word'          => 'Random word',
+                'img_path'      => './captcha/',
+                'img_url'       => base_url().'captcha/',
+                'font_path'     => '/ttf/DejaVuSansMono-Bold.ttf',
+                'img_width'     => '150',
+                'img_height'    => 40,
+                'expiration'    => 7200,
+                'word_length'   => 4,
+                'font_size'     => 40,
+                'img_id'        => 'Imageid',
+                'pool'          => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
+                // White background and border, black text and red grid
+                'colors'        => array(
+                        'background' => array(255, 255, 255),
+                        'border' => array(255, 255, 255),
+                        'text' => array(0, 0, 0),
+                        'grid' => array(255, 40, 40)
+                )
+        );
+
+        $cap = create_captcha($vals);
+        $data = array(
+        'captcha_time'  => $cap['time'],
+        'ip_address'    => $this->input->ip_address(),
+        'word'          => $cap['word']
+        );
+        $query = $this->db->insert_string('captcha', $data);
+        $this->db->query($query);
+        $data['captcha_image'] = $cap['image'];
         return $this->auth->showLoginForm($data);
     }
 

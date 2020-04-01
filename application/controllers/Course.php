@@ -18,11 +18,14 @@ class Course extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        //$this->load->library('auth');
+        $this->load->library('auth');
         //$this->auth->route_access();
         $this->load->model('course_model');
         $this->load->helper('url_helper');
         $this->load->model('department_model');
+        if(empty($this->auth->userID())){
+            redirect("/login");
+        }
     }
 
     /**

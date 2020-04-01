@@ -31,7 +31,7 @@ class Client extends CI_Controller
     public function index()
     {
         
-       
+       $this->db->insert('visits', array("ip"=>$_SERVER['REMOTE_ADDR'],"visit_date"=>date("Y-m-d h:i:s")));
         $data['users'] = $this->user->all();
         $user_data = array();
         $cmb_data = array();
@@ -67,5 +67,24 @@ class Client extends CI_Controller
         $data['title'] = 'Home';
         $this->load->view('header_client',$data);
         $this->load->view('client',$data);
+    }
+    public function download($id)
+    {
+        $file=$this->cmb_model->find($id);
+        //print_r($file);
+       // exit();
+        // increament the counter downloaded
+       // downloaded
+        $this->cmb_model->edit(array("downloaded"=>$file->downloaded+1,"cmb_id"=>$id));
+        $this->load->helper('download');
+        $data = file_get_contents(base_url($file->file_path));
+        redirect(base_url($file->file_path));
+        //print($data);
+        exit();
+        //force_download($file->cmb_title, $data);
+        force_download($file->cmb_title, $data);
+        
+        
+       // echo "i need to download ".$id;
     }
 }

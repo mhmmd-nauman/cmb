@@ -79,6 +79,23 @@ class Auth
      */
     public function login($request)
     {
+        // need the captcha code here
+        $expiration = time() - 7200; // Two hour limit
+        $this->CI->db->where('captcha_time < ', $expiration)
+                ->delete('captcha');
+
+        // Then see if a captcha exists:
+        $sql = 'SELECT COUNT(*) AS count FROM captcha WHERE word = ? AND ip_address = ? AND captcha_time > ?';
+        $binds = array($this->CI->input->post("captcha"), $this->CI->input->ip_address(), $expiration);
+        $query = $this->CI->db->query($sql, $binds);
+        $row = $query->row();
+
+        if ($row->count == 0)
+        {
+            $this->error["failed"] = "Invalid Captcha";
+            return $this->failedLogin($request);
+        }
+        
         if ($this->validate($request)) {
             $this->user = $this->credentials($this->userName, $this->password);
             if ($this->user) {

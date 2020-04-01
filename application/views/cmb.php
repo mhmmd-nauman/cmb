@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <th >CMB</th>
                         <th class=" col-md-3">Department</th>
                         <th class=" col-md-3">Course</th>
+                        <th class=" col-md-1">Downloaded</th>
                         <th class=" col-md-1">Actions</th>
                     </tr>
                 </thead>
@@ -37,6 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <td><?php echo $item->cmb_title;?></td>
                       <td><?php echo $users_array[$item->user_id];?></td>
                       <td><?php echo $courses_array[$item->course_id];?></td>
+                      <td><?php echo $item->downloaded;?></td>
                       <td>
                           <div class = "dropdown pull-right">
    
@@ -50,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </li>
                                             <li class = "divider"></li>
                                             <li role = "presentation">
-                                                <a   href="<?php echo site_url('cmb/delete/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-remove" ></span> Delete</a>
+                                                <a onclick="return confirm('Are you sure you want to delete this item?');"  href="<?php echo site_url('cmb/delete/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-remove" ></span> Delete</a>
                                             </li>
                                             <li class = "divider"></li>
                                             <li role = "presentation">

@@ -25,6 +25,9 @@ class Home extends CI_Controller
         $this->load->model('department_model');
         $this->load->model('course_model');
         $this->load->model('user');
+        if(empty($this->auth->userID())){
+            redirect("/login");
+        }
     }
 
     /**

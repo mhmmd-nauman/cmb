@@ -18,13 +18,16 @@ class Cmb extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        //$this->load->library('auth');
+        $this->load->library('auth');
         //$this->auth->route_access();
         $this->load->model('cmb_model');
         $this->load->helper('url_helper');
         $this->load->model('department_model');
         $this->load->model('course_model');
         $this->load->model('user');
+        if(empty($this->auth->userID())){
+            redirect("/login");
+        }
     }
 
     /**
@@ -35,7 +38,11 @@ class Cmb extends CI_Controller
     public function index()
     {
         //user_id = $this->session->userdata['userID']
-        $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
+        if(in_array("1", $this->session->userdata['roles'])){
+            $data['cmbs'] = $this->cmb_model->all();
+        }else{
+            $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
+        }
         $data['title'] = 'CMB';
         
         $departments = $this->department_model->all();
@@ -211,7 +218,14 @@ class Cmb extends CI_Controller
            // $this->load->view('success');
         }
     }
-    
+    public function delete($id){
+        // soft delete will deal with it later
+        $updated_data['cmb_id'] = $id;
+        $updated_data['user_id'] = 2;
+        
+        $this->cmb_model->edit($updated_data);
+        redirect('cmb');
+    }
     public function download($id)
     {
         $file=$this->cmb_model->find($id);
@@ -219,7 +233,7 @@ class Cmb extends CI_Controller
        // exit();
         // increament the counter downloaded
        // downloaded
-        $this->cmb_model->edit(array("downloaded"=>$file->downloaded+1,"cmb_id"=>$id));
+       // $this->cmb_model->edit(array("downloaded"=>$file->downloaded+1,"cmb_id"=>$id));
         $this->load->helper('download');
         $data = file_get_contents(base_url($file->file_path));
         redirect(base_url($file->file_path));

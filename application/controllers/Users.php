@@ -18,12 +18,16 @@ class Users extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        //$this->load->library('auth');
-        //$this->auth->route_access();
+        
         $this->load->model('user');
         $this->load->model('role');
         $this->load->helper('url_helper');
         $this->load->model('department_model');
+        $this->load->library('auth');
+        if(empty($this->auth->userID())){
+            redirect("/login");
+        }
+        
     }
 
     /**
@@ -52,6 +56,7 @@ class Users extends CI_Controller
     }
     public function index()
     {
+        
         $data['users'] = $this->user->all();
        // print_r($data['users']);
         $user_roles_data = array();

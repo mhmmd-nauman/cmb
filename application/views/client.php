@@ -15,7 +15,7 @@
         <div class="panel-group">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h4 class="panel-title"><a class="btn bg-light w-100 text-left" data-toggle="collapse" href="#economics"><?php print( $dpt->name);?></a></h4></div>
+              <h4 class="panel-title"><a class="btn bg-light w-100 text-left" data-toggle="collapse" href="#dpt-<?php echo $dpt->id;?>"><?php print( $dpt->name);?></a></h4></div>
              
              <?php // print( $dpt->id);?>
              <?php 
@@ -26,16 +26,16 @@
                  ?>
 
 
-                  <div id="economics" class="panel-collapse collapse">
+                  <div id="dpt-<?php echo $dpt->id;?>" class="panel-collapse collapse">
               <!-- 2nd level List -->
               <ul class="list-group">
                 
                 <?php 
                 //if($item1->id == $item2->course_id){ ?>
 
-                     <a data-toggle="collapse" href="#subject1"><li class="list-group-item"><?php print( $course_title); ?></li></a>
+                     <a data-toggle="collapse" href="#subject<?php echo $course_id;?>"><li class="list-group-item"><?php print( $course_title); ?></li></a>
                       
-                 <div id="subject1" class="panel-collapse collapse">
+                 <div id="subject<?php echo $course_id;?>" class="panel-collapse collapse">
                         <!-- 3nd level List of subject 1 accounting -->
                         <ul class="list-group">
                         <?php foreach ($cmb_data[$dpt->id] as $item3): 
@@ -44,7 +44,7 @@
                          <?php 
                              if($course_id == $item3->course_id){ ?>   
                                 <li class="list-group-item"> 
-                                    <a target="_blank"  href="<?php echo site_url('cmb/download/'.$item3->cmb_id)?>"     tabindex = "-1"  ><span class="glyphicon glyphicon-download" ></span> <?php print( $item3->cmb_title); ?></a>
+                                    <a target="_blank"  href="<?php echo site_url('client/download/'.$item3->cmb_id)?>"     tabindex = "-1"  ><span class="glyphicon glyphicon-download" ></span> <?php print( $item3->cmb_title); ?></a>
                                 </li>
                             <?php  }
                             ?>
