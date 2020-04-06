@@ -75,6 +75,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 <div>
                    <ul class = "nav navbar-nav">
+                      
+                      <li>
+                            <a href ="<?= site_url('cmb')?>"  >Course Material Bundles</a>
+                      </li>
+                      <li>
+                        <a href ="<?php echo site_url('course')?>"  > Courses</a>
+                      </li>
                       <?php if(in_array("1", $this->session->userdata['roles'])){?> 
                        <!--
                       <li class = "dropdown">
@@ -103,15 +110,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        -->
                       
                       
-                      <li><a href = "<?= site_url('users')?>">Departments</a></li>
-                      <li><a href = "#">Roles</a></li>
+                      <li><a href = "<?= site_url('users')?>">Logins</a></li>
+                      
+                      <li class = "dropdown">
+                         <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
+                            Roles 
+                            <b class = "caret"></b>
+                         </a>
+
+                         <ul class = "dropdown-menu">
+                            <li>
+                                <li><a href = "<?= site_url('users/role')?>">Roles</a></li>
+                            </li>
+                            <li class = "divider"></li>
+                            <li>
+                                <a href ="<?php echo site_url('permissions')?>"  >Permission</a>
+                            </li>
+                            
+                           
+                            
+                            
+                        </ul>
+
+                      </li>
                       <?php } ?>
-                      <li>
-                            <a href ="<?= site_url('cmb')?>"  >Course Material Bundles</a>
-                      </li>
-                      <li>
-                        <a href ="<?php echo site_url('course')?>"  > Courses</a>
-                      </li>
                       <li><a href = "<?= site_url('login/logout')?>">Logout</a></li>
           
                    </ul>

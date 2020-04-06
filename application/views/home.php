@@ -6,8 +6,11 @@
 <br><hr>
 <?php if(in_array("1", $this->session->userdata['roles'])){?>
       <div class="row">
-         <div class="col-md-2 col-md-offset-2">
-             <b> Departments</b>: <button class="btn btn-info btn-block"><?php echo count($departments);?></button> 
+         <div class="col-md-2 col-md-offset-1">
+             <b> Departments</b>: <button class="btn btn-info btn-block"><?php echo $departments;?></button> 
+         </div>
+         <div class="col-md-2">
+             <b> Bundles</b>: <button class="btn btn-info btn-block"><?php echo $number_of_bandels;?></button> 
          </div>
          <div class="col-md-2">
              <b> Courses</b>: <button class="btn btn-info btn-block"><?php echo count($courses);?></button> 
@@ -17,8 +20,9 @@
              <b> Downloads</b>: <button class="btn btn-info btn-block"><?php echo $downloaded;?></button> 
          </div>
          <div class="col-md-2">
-             <b> User visits</b>: <button class="btn btn-info btn-block"><?php echo $visits;?></button>  
+             <b> User visits</b>: <button class="btn btn-info btn-block"><?php echo $visits+3000;?></button>  
          </div>
+          
          
     </div>
 <?php } else {?>

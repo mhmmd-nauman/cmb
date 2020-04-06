@@ -99,6 +99,24 @@ class Auth
         if ($this->validate($request)) {
             $this->user = $this->credentials($this->userName, $this->password);
             if ($this->user) {
+                // remember me
+               // print($this->CI->input->post("remember"));
+                //exit;
+                if(0) {
+                //if($this->CI->input->post("remember") == 'remember-me') {
+                    $cookiedata = array(
+                        'userName' => $this->userName,
+                        'password' => $this->password
+                    );
+                   // set_cookie('login_data', $cookiedata);
+                  
+                } else {
+                    $cookiedata = array(
+                        'userName' => '',
+                        'password' => ''
+                    );
+                 //   set_cookie('login_data', $cookiedata);
+                }           
                 return $this->setUser();
             } else {
                 return $this->failedLogin($request);
