@@ -36,11 +36,12 @@ class Course extends CI_Controller
     public function index()
     {
         if(in_array("1", $this->session->userdata['roles'])){
-            $data['courses'] = $this->course_model->all();
+            //$data['courses'] = $this->course_model->all();
         }else{
             //print_r($this->session->userdata);
-            $data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
+           // $data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
         }
+        $data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
        // $departments = $this->department_model->all();
         //foreach($departments as $dpt){
            // $data_dpt[$dpt->department_id] = $dpt->department_title;

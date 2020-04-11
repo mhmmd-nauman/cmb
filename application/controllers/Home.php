@@ -62,6 +62,43 @@ class Home extends CI_Controller
         $data['departments'] = $total_department;
         $courses = $this->course_model->all();
         $data['courses'] = $courses;
+        //// start of graph
+        $data['users'] = $this->user->all();
+        $user_data = array();
+        $cmb_data = array();
+        $courses_data = array();
+        $cmb_downloaded = array();
+        $cmb_count = 0;
+        foreach($data['users'] as $user){
+         // print_r($user->id);
+           $cmb_count = 0;
+          if(in_array("3", $this->user->userWiseRoles($user->id))){
+              $user_data[] = $user;
+              $cmb_data[$user->id] = $this->cmb_model->findby_user($user->id);
+              $courses_data[$user->id] = $this->course_model->find_by_dpt($user->id);
+              foreach($cmb_data[$user->id] as $cmb){
+                  $cmb_count = $cmb_count+$cmb->downloaded;
+                  
+                 // $courses_data[$user->id][$cmb->course_id] = $course_title_data->course_title;
+              }
+              $cmb_downloaded[$user->id] = round(($cmb_count>0)?$cmb_count/10:0);
+          }
+          
+        }
+        $data['cmb_data'] =$cmb_data;
+        $data['courses_data'] =$courses_data;
+        $data['cmb_downloaded'] = $cmb_downloaded;
+        //echo "<pre>";
+        //print_r($cmb_downloaded);
+        //echo "</pre>";
+        //print_r($courses_data);
+        $data['users'] =$user_data;
+        //
+        $data['courses'] = $courses;
+        
+        $data['cmbs'] = $cmbs;
+        
+        ///// end of graph
         $data['title'] = 'Home';
         $this->load->view('header',$data);
         $this->load->view('home',$data);

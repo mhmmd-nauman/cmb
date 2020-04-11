@@ -33,6 +33,7 @@ class Login extends CI_Controller
         $this->load->database();
         $this->load->library(['auth', 'form_validation']);
         $this->load->helper('captcha');
+        
     }
 
     /**
@@ -40,17 +41,21 @@ class Login extends CI_Controller
      */
     public function index()
     {
-        // check if there is remember me cookie
-        ECHO "dd";
-        $cookieData = get_cookie("login_data");
-        PRINT_R($cookieData);
-        
-        
-        
-        print_r($cookieData);
-        if(isset($cookieData)){
-           print_r($cookieData); 
+        if($this->auth->userID()>0){
+            redirect("/home");
         }
+        //echo password_hash("1234", PASSWORD_BCRYPT);
+        // check if there is remember me cookie
+        //ECHO "dd";
+        //$cookieData = get_cookie("login_data");
+        //PRINT_R($cookieData);
+        
+        
+        
+       // print_r($cookieData);
+        //if(isset($cookieData)){
+           //print_r($cookieData); 
+       //}
         
         $data = array();
         $this->db->insert('visits', array("ip"=>$_SERVER['REMOTE_ADDR'],"visit_date"=>date("Y-m-d h:i:s")));

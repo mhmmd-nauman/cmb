@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="row">
     <div class=" col-md-5 col-md-offset-1">
-        <h4>User List</h4>
+        <h4>Course Material Bundle - Older Version List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="<?= site_url('users/create')?>" class=" btn btn-success btn-small">Add New Department</a>
+       
     </div>
 </div>
 <DIV class="row">
@@ -16,9 +16,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <thead>
                     <tr>
                         <th class=" col-md-1">ID#</th>
-                        <th class=" col-md-1">Login</th>
-                        <th>Name</th>
-                        <th class="col-md-2">Role</th>
+                        <th >CMB</th>
+                        <th class=" col-md-3">Department</th>
+                        <th class=" col-md-3">Course</th>
+                        <th class=" col-md-1">Version</th>
+                        <th class=" col-md-1">Downloaded</th>
                         <th class=" col-md-1">Actions</th>
                     </tr>
                 </thead>
@@ -26,20 +28,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     
                     <?php 
                     //print_r($courses);
-                    foreach ($users as $item):
+                    if(count((array)$cmbs_versions)>0){
+                    foreach ($cmbs_versions as $item):
                         //print_r($course_item);
-                        $active_record = $item->id;
-                        //print_r($user_roles);
+                        $active_record = $item->cmb_id;
                     ?>
                     <tr >
-                      <td><?php echo $item->id;?></td>
-                      <td><?php echo $item->username;?></td>
-                      <td><?php echo $item->name;?><br><?php echo $item->email;?></td>
-                      <td><?php 
-                      if(key_exists($item->id,$user_roles)){
-                            foreach($user_roles[$item->id] as $role)echo$role.",";
-                      }
-                      ?></td>
+                      <td><?php echo $item->cmb_id;?></td>
+                      
+                      <td><?php echo $item->cmb_title;?></td>
+                      <td><?php echo $users_array[$item->user_id];?></td>
+                      <td><?php echo $courses_array[$item->course_id];?></td>
+                      <td><?php echo $item->version_number;?></td>
+                      <td><?php echo $item->downloaded;?></td>
                       <td>
                           <div class = "dropdown pull-right">
    
@@ -49,10 +50,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </button>
                                         <ul class = "dropdown-menu" role = "menu" aria-labelledby = "dropdownMenu_actions">
                                             
-                                            
                                             <li role = "presentation">
-                                                <a  href="<?php echo site_url('users/changepassword/'.$item->id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-edit" ></span> Change Password</a>
+                                                <?php $item->file_path = str_replace("uploads/", "", $item->file_path)?>
+                                                <a target="_blank"  href="<?php echo site_url('cmb/download_revision/'.$item->cmb_id.'/'.$item->file_path)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-download" ></span> Download</a>
                                             </li>
+                                            
                                             
                                             
                                             
@@ -63,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </td>
                     </tr>
                     <?php endforeach; ?>
-                   
+                    <?php } ?>
                     
                 </tbody>
             </table>

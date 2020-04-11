@@ -72,6 +72,9 @@ class User extends CI_Model
      */
     public function edit($data)
     {
+        if(key_exists("password", $data)){
+            $data["password"] = password_hash($data["password"], PASSWORD_BCRYPT);
+        }
         return $this->db->update('users', $data, array('id' => $data['id']));
     }
 

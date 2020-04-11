@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <th >CMB</th>
                         <th class=" col-md-3">Department</th>
                         <th class=" col-md-3">Course</th>
+                        <th class=" col-md-1">Version</th>
                         <th class=" col-md-1">Downloaded</th>
                         <th class=" col-md-1">Actions</th>
                     </tr>
@@ -38,6 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <td><?php echo $item->cmb_title;?></td>
                       <td><?php echo $users_array[$item->user_id];?></td>
                       <td><?php echo $courses_array[$item->course_id];?></td>
+                      <td><?php echo $item->version_number;?></td>
                       <td><?php echo $item->downloaded;?></td>
                       <td>
                           <div class = "dropdown pull-right">
@@ -48,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </button>
                                         <ul class = "dropdown-menu" role = "menu" aria-labelledby = "dropdownMenu_actions">
                                             <li role = "presentation">
-                                                <a   href="<?php echo site_url('cmb/edit/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-edit" ></span> Edit</a>
+                                                <a   href="<?php echo site_url('cmb/edit/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-edit" ></span> Revise</a>
                                             </li>
                                             <li class = "divider"></li>
                                             <li role = "presentation">
@@ -58,7 +60,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <li role = "presentation">
                                                 <a target="_blank"  href="<?php echo site_url('cmb/download/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-download" ></span> Download</a>
                                             </li>
-                                            
+                                            <li class = "divider"></li>
+                                            <li role = "presentation">
+                                                <a   href="<?php echo site_url('cmb/view_revisions/'.$item->cmb_id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-book" ></span> View Old Revisions</a>
+                                            </li>
                                             
                                             
                                             

@@ -39,10 +39,11 @@ class Cmb extends CI_Controller
     {
         //user_id = $this->session->userdata['userID']
         if(in_array("1", $this->session->userdata['roles'])){
-            $data['cmbs'] = $this->cmb_model->all();
+            //$data['cmbs'] = $this->cmb_model->all();
         }else{
-            $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
+            //$data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
         }
+        $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
         $data['title'] = 'CMB';
         
         $departments = $this->department_model->all();
@@ -96,6 +97,9 @@ class Cmb extends CI_Controller
         //print_r($data);
         $this->form_validation->set_rules('cmb_title', 'Teacher', 'required');
         $this->form_validation->set_rules('course_id', 'course_id', 'required');
+        
+        $this->form_validation->set_rules('major_update', 'major_update', 'required');
+        $this->form_validation->set_rules('change_log', 'change_log', 'required');
 
         if ($this->form_validation->run() === FALSE)
         {
@@ -122,6 +126,8 @@ class Cmb extends CI_Controller
                     $updated_data['cmb_id'] = $id;
                     $updated_data['cmb_title'] = $this->input->post('cmb_title').".".$type[1];
                     $updated_data['course_id'] = $this->input->post('course_id');
+                    $updated_data['change_log'] = $this->input->post('change_log');
+                    
                     $this->cmb_model->edit($updated_data);
                     $this->load->view('header', $data);
                     $this->load->view('success_cmb',$data);
@@ -139,6 +145,43 @@ class Cmb extends CI_Controller
                     $updated_data['user_id'] = $this->session->userdata['userID'];
                     $updated_data['course_id'] = $this->input->post('course_id');
                     $updated_data['file_path'] = $file_name;
+                    
+                    $updated_data['major_update'] = $this->input->post('major_update');
+                    $updated_data['change_log'] = $this->input->post('change_log');
+                    $updated_data['version_number'] = $this->input->post('version_number');
+                    $version_data=explode(".", $updated_data['version_number']);
+                    
+                    if($updated_data['major_update']){
+                        $version_number = $version_data[0]+1;
+                        $updated_data['version_number'] = $version_number.".0";
+                    }else{
+                        $version_number = $version_data[1]+1;
+                        $updated_data['version_number'] = $version_data[0].".".$version_number;
+                    }
+                    // create a revision 
+                   // print($updated_data['version_number']);
+                   // exit;
+                    $current_cmb = $this->cmb_model->find($id);
+                    $version_copy = array();
+                    $version_copy['cmb_id'] = $id;
+                    $version_copy['cmb_title'] = $current_cmb->cmb_title;    
+                    $version_copy['deptID'] = $current_cmb->deptID;
+                    $version_copy['file_type'] = $current_cmb->file_type;
+                    $version_copy['user_id'] = $current_cmb->user_id;
+                    
+                    $version_copy['course_id'] = $current_cmb->course_id;
+                    $version_copy['file_path'] = $current_cmb->file_path;
+                    $version_copy['downloaded'] = $current_cmb->downloaded;
+                    $version_copy['major_update'] = $current_cmb->major_update;
+                    $version_copy['remarks'] = $current_cmb->remarks;
+                    
+                    $version_copy['version_number'] = $current_cmb->version_number;
+                    $version_copy['change_log'] = $current_cmb->change_log;
+                    $version_copy['upload_time'] = $current_cmb->upload_time;
+         
+                    $this->cmb_model->set_cmb_version($version_copy);
+                    
+                    
                     $this->cmb_model->edit($updated_data);
                     $this->load->view('header', $data);
                     $this->load->view('success_cmb', $data);
@@ -226,6 +269,25 @@ class Cmb extends CI_Controller
         $this->cmb_model->edit($updated_data);
         redirect('cmb');
     }
+    public function download_revision($id,$file_path)
+    {
+        $file=$this->cmb_model->findby_versions_filepath($id,$file_path);
+       // print_r($file);
+       // exit();
+        // increament the counter downloaded
+       // downloaded
+       // $this->cmb_model->edit(array("downloaded"=>$file->downloaded+1,"cmb_id"=>$id));
+        $this->load->helper('download');
+        $data = file_get_contents(base_url($file->file_path));
+        redirect(base_url($file->file_path));
+        //print($data);
+        exit();
+        //force_download($file->cmb_title, $data);
+        force_download($file->cmb_title, $data);
+        
+        
+       // echo "i need to download ".$id;
+    }
     public function download($id)
     {
         $file=$this->cmb_model->find($id);
@@ -244,5 +306,31 @@ class Cmb extends CI_Controller
         
         
        // echo "i need to download ".$id;
+    }
+    public function view_revisions($id)
+    {
+       // $courses = $this->course_model->find_by_dpt($this->session->userdata['userID']);
+        
+        $courses = $this->course_model->all();
+        $data['courses'] = $courses;
+        $data_crt = array();
+        foreach($courses as $crt){
+            $data_crt[$crt->course_id] = $crt->course_title;
+        }
+        $data['courses_array'] = $data_crt;
+        $users = $this->user->all();
+        foreach($users as $usr){
+            $data_usr[$usr->id] = $usr->name;
+        }
+        $data['users_array'] = $data_usr;
+        
+        $data['cmbs_versions'] = $this->cmb_model->findby_versions($this->session->userdata['userID'],$id);
+       // print_r($data['cmbs_versions']);
+       
+        $data['title'] = 'Course Material Bundle Versiosn';
+        //print_r($data);
+        
+        $this->load->view('header',$data);
+        $this->load->view('cmb_versions',$data);
     }
 }

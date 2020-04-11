@@ -31,7 +31,19 @@ class Cmb_model extends CI_Model
     {
         return $this->db->get_where("cmb", array("user_id" => $id))->result();
     }
-
+    public function findby_versions($user_id,$id)
+    {
+        return $this->db->get_where("cmb_versions", array("cmb_id" => $id))->result();
+    }
+    public function findby_versions_filepath($id,$file_path)
+    {
+       // echo "$id,$file_path";
+        $file_path_data=explode("-", $file_path);
+        //print_r($file_path_data);
+        //return $this->db->like("cmb_versions", array("file_path"=>"uploads/".$file_path))->row(0);
+        $this->db->where(" `file_path` LIKE '%".$file_path_data[0]."-".$file_path_data[1]."%'");
+        return $this->db->get('cmb_versions')->row(0);
+    }
     /**
      * Find all data.
      *
@@ -96,5 +108,25 @@ class Cmb_model extends CI_Model
         );
 
         return $this->db->insert('cmb', $data);
+    }
+    public function set_cmb_version($data_upload)
+    {
+        $data = array(
+            'cmb_id' => $data_upload['cmb_id'],
+            'cmb_title' => $data_upload['cmb_title'],
+            'deptID' => $data_upload['deptID'],
+            'file_type' => $data_upload['file_type'],
+            'user_id' => $data_upload['user_id'],
+            'course_id' => $data_upload['course_id'],
+            'file_path' => $data_upload['file_path'],
+            'downloaded' => $data_upload['downloaded'],
+            'major_update' => $data_upload['major_update'],
+            'remarks' => $data_upload['remarks'],
+            'version_number' => $data_upload['version_number'],
+            'change_log' => $data_upload['change_log'],
+            'upload_time' => $data_upload['upload_time']
+        );
+
+        return $this->db->insert('cmb_versions', $data);
     }
 }

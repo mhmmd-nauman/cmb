@@ -42,17 +42,85 @@ class Users extends CI_Controller
         }
         fclose($output);
     }
-    public function changepassword(){
-        exit();
-        $csvFile = fopen("users.csv", 'r');
-        while(($line = fgetcsv($csvFile)) !== FALSE){
-            //print_r($line);
-            $user_data['id'] = $line[0];
-            $password = $line[5];
-            $user_data["password"] = password_hash($password, PASSWORD_BCRYPT);
-            $this->user->edit($user_data);
-           // break;
+    public function password_check($oldpass)
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $id = $this->auth->userID();
+        $user = $this->user->find($id);
+      //  echo $id;
+       // echo $oldpass;
+       // echo $user->password;
+       // echo "<br>";
+       // echo password_hash($oldpass, PASSWORD_BCRYPT);
+       
+        if( password_verify($oldpass, $user->password)) {
+            $this->form_validation->set_message('password_check', 'The {field} does not match');
+            return false;
         }
+
+        return true;
+    }
+    public function changepassword($id=0){
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $data['title'] = 'Change password';
+
+       // $this->form_validation->set_rules('oldpassword', 'Old Password', 'callback_password_check');
+       // $this->form_validation->set_rules('deptID', 'deptID', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('confirmpassword', 'Confirm Password', 'required|matches[password]');
+       // $this->form_validation->set_rules('password', 'password', 'required');
+        
+        
+        $oldpassword = $this->input->post('oldpassword');
+       // $user_data['deptID'] = $this->input->post('deptID');
+        $user_data['password'] = $this->input->post('password');
+       $confirmpassword = $this->input->post('confirmpassword');
+       // $user_data['password'] = $this->input->post('password');
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+        if ($this->form_validation->run() === FALSE )
+        {
+            //$data['departments'] = $this->department_model->all();
+            
+            
+           // $data['users'] = $this->user->all();
+            
+            $data['id'] = $id;
+            $this->load->view('header', $data);
+            $this->load->view('change_password',$data);
+            
+
+        }
+        else
+        {
+            if(empty($id)){
+                $user_data['id'] = $this->auth->userID();
+            }else{
+                $user_roles = $this->user->userWiseRoles($this->auth->userID());
+               // print_r($user_roles);
+                if(in_array("1", $user_roles)){
+                    $user_data['id'] = $id;
+                }else{
+                    exit();
+                }
+            }
+            $this->user->edit($user_data);
+            
+            $this->load->view('header', $data);
+            $this->load->view('success_change_password');
+        }
+       // exit();
+       // $csvFile = fopen("users.csv", 'r');
+       // while(($line = fgetcsv($csvFile)) !== FALSE){
+            //print_r($line);
+       //     $user_data['id'] = $line[0];
+       //     $password = $line[5];
+       //     $user_data["password"] = password_hash($password, PASSWORD_BCRYPT);
+       //     $this->user->edit($user_data);
+           // break;
+       // }
         
     }
     public function index()
