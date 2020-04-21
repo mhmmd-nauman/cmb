@@ -35,23 +35,55 @@ class Cmb extends CI_Controller
      *
      * @return mixed
      */
-    public function index()
-    {
-        //user_id = $this->session->userdata['userID']
-        if(in_array("1", $this->session->userdata['roles'])){
-            //$data['cmbs'] = $this->cmb_model->all();
-        }else{
-            //$data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
-        }
-        $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
+    public function search_by_dpt(){
         $data['title'] = 'CMB';
         
+        if(in_array("1", $this->session->userdata['roles']) || in_array("4", $this->session->userdata['roles'])){
+            $data['cmbs'] = $this->cmb_model->all();
+        }else{
+            $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
+        }
+        
+        
+        $this->load->view('header',$data);
+        $this->load->view('cmb',$data);
+    }
+    public function index($searchbydpt="")
+    {
+        //user_id = $this->session->userdata['userID']
+        $data['searched_dpt'] = 0;
+        if(in_array("1", $this->session->userdata['roles']) || in_array("4", $this->session->userdata['roles'])){
+            if(empty($searchbydpt)){
+               // $data['cmbs'] = $this->cmb_model->all();
+                $data['cmbs'] = $this->cmb_model->findby_user(0);
+            }else{
+                $data['cmbs'] = $this->cmb_model->findby_user($this->input->post('dpt_id'));
+                $data['searched_dpt'] = $this->input->post('dpt_id');
+            }
+        }else{
+            $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
+        }
+        //$data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
+        $data['title'] = 'CMB';
+        
+        // cmb versions count
+        $cmb_version = array();
+        $cmb_ratings = array();
+        foreach($data['cmbs'] as $cmb_id){
+            $cmb_version[$cmb_id->cmb_id] = count($this->cmb_model->findby_versions($this->session->userdata['userID'],$cmb_id->cmb_id));
+            $cmb_ratings[$cmb_id->cmb_id] = $this->cmb_model->findby_ratings($cmb_id->cmb_id);
+            $cmb_ratings[$cmb_id->cmb_id] = $cmb_ratings[$cmb_id->cmb_id][0];
+        }
+        //print_r($cmb_version);
+        $data['cmb_version'] = $cmb_version;
+        $data['cmb_ratings'] = $cmb_ratings;
         $departments = $this->department_model->all();
         foreach($departments as $dpt){
             $data_dpt[$dpt->department_id] = $dpt->department_title;
         }
         $data['departments'] = $data_dpt;
-        if(in_array("1", $this->session->userdata['roles'])){
+        //print_r($data_dpt);
+        if(in_array("1", $this->session->userdata['roles']) || in_array("4", $this->session->userdata['roles'])){
            $courses = $this->course_model->all();
         }else{
             //print_r($this->session->userdata);
@@ -68,8 +100,13 @@ class Cmb extends CI_Controller
         $users = $this->user->all();
         foreach($users as $usr){
             $data_usr[$usr->id] = $usr->name;
+            if(in_array("3", $this->user->userWiseRoles($usr->id))){
+                $data_usr_dpt[$usr->id] = $usr->name;
+            }
         }
         $data['users_array'] = $data_usr;
+        $data['dpts_array'] = $data_usr_dpt;
+        //print_r($data_usr_dpt);
         $data['title'] = 'Upload Course Material Bundle';
         //print_r($data);
         
@@ -115,7 +152,7 @@ class Cmb extends CI_Controller
             
             $config['upload_path']          = './uploads/';
             $config['allowed_types']        = 'zip|rar';
-            $config['max_size']             = 0;
+            $config['max_size']             = 104857600;
             $config['max_width']            = 1024;
             $config['max_height']           = 768;
             $this->load->library('upload', $config);
@@ -230,7 +267,7 @@ class Cmb extends CI_Controller
             
             $config['upload_path']          = './uploads/';
             $config['allowed_types']        = 'zip|rar';
-            $config['max_size']             = 0;
+            $config['max_size']             = 104857600;
             $config['max_width']            = 1024;
             $config['max_height']           = 768;
             $this->load->library('upload', $config);
@@ -332,5 +369,45 @@ class Cmb extends CI_Controller
         
         $this->load->view('header',$data);
         $this->load->view('cmb_versions',$data);
+    }
+    public function edit_ratings($id)
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        
+        $data['title'] = 'Remarks & Ratings - Course Material Bundle';
+        //print_r($data);
+        $this->form_validation->set_rules('ratings', 'Ratings', 'required');
+        $this->form_validation->set_rules('remarks', 'Remarks', 'required');
+        
+        if ($this->form_validation->run() === FALSE)
+        {
+            //$data['departments'] = $this->department_model->all();
+            $data["cmb"] = $this->cmb_model->findby_ratings($id);
+            $data["cmb_data"] = $this->cmb_model->find($id);
+            $data["cmb"] = $data["cmb"][0];
+            
+            $this->load->view('header', $data);
+            $this->load->view('edit_cmb_ratings',$data);
+            
+            
+        }
+        else
+        {
+                    $updated_data['cmb_id'] = $id;
+                    $updated_data['ratings'] = $this->input->post('ratings');
+                    $updated_data['remarks'] = $this->input->post('remarks');
+                    $updated_data['user_id'] = $this->session->userdata['userID'];
+                    $updated_data['created_at'] = date("Y-m-d h:i:s");
+                    $this->cmb_model->edit_cmb_ratings($updated_data);
+                    $this->load->view('header', $data);
+                    $this->load->view('success_ratings',$data);
+            
+            
+            
+            //
+            //$this->load->view('header', $data);
+           // $this->load->view('success');
+        }
     }
 }

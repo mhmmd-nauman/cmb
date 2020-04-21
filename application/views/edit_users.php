@@ -8,24 +8,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('users/create'); ?>
+<?php echo form_open('users/edit/'.$user->id); ?>
 
     
     <div class="form-group">
         <label for="email">Name:</label>
-        <input name="name" type="text" class="form-control" id="name">
+        <input name="name" type="text" value="<?php echo $user->name;?>" required="" class="form-control" id="name">
     </div>
     <div class="form-group">
         <label for="email">Email:</label>
-        <input name="email" type="text" class="form-control" id="email">
+        <input name="email" type="text" value="<?php echo $user->email;?>"  class="form-control" id="email">
     </div>
     <div class="form-group">
         <label for="email">Login:</label>
-        <input name="username" type="text" class="form-control" id="username">
-    </div>
-    <div class="form-group">
-        <label for="email">Password:</label>
-        <input name="password" type="text" class="form-control" id="password">
+        <input name="username" value="<?php echo $user->username;?>" required="" type="text" class="form-control" id="username">
     </div>
     
     <div class="form-group">
@@ -33,7 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <select name="role_id" class="form-control">
            
             <?php  foreach ($roles as $role){ ?>
-                <option  value="<?php echo $role->id;?>"><?php echo $role->display_name;?></option>
+            
+            <option <?php if(in_array($role->id, $user_roles))echo"selected";?>  value="<?php echo $role->id;?>"><?php echo $role->display_name;?></option>
             <?php } ?>
         </select>
     </div>

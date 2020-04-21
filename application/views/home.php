@@ -21,7 +21,7 @@
              <b> Downloads</b>: <button class="btn btn-info btn-block"><?php echo $downloaded;?></button> 
          </div>
          <div class="col-md-2">
-             <b> User visits</b>: <button class="btn btn-info btn-block"><?php echo $visits+3000;?></button>  
+             <b> User visits</b>: <button class="btn btn-info btn-block"><?php echo $visits;?></button>  
          </div>
           
          
@@ -86,7 +86,7 @@
                     text: ''
                 },
                 xAxis: {
-                    categories: [<?php foreach ($users as $dpt){ ?>'<?php print( str_replace("", "", $dpt->name));?>',<?php } ?>''],
+                    categories: [<?php foreach ($users as $dpt){ ?>'<?php print( str_replace("Department of", "", $dpt->name));?>',<?php } ?>''],
                     title: {
                         text: null
                     }
@@ -127,15 +127,20 @@
                     enabled: false
                 },
                 series: [{
-                    name: 'Courses In Department',
+                    name: 'Courses Included',
                     data: [<?php foreach ($users as $dpt){ ?><?php if(key_exists($dpt->id, $courses_data)){echo count( $courses_data[$dpt->id]);}else{echo"0";}?>,<?php } ?>0]
                 }, {
                     name: 'CMB Uploaded',
                     data: [<?php foreach ($users as $dpt){ ?><?php if(key_exists($dpt->id, $cmb_data)){echo count( $cmb_data[$dpt->id]);}else{echo"0";}?>,<?php } ?>0]
                 }, {
-                    name: 'CMB Downloaded By Students(1=10)',
+                    name: 'CMB Downloaded By Students(1=15)',
                     data: [<?php foreach ($users as $dpt){ ?><?php if(key_exists($dpt->id, $cmb_downloaded)){echo  $cmb_downloaded[$dpt->id];}else{echo"0";}?>,<?php } ?>0]
-                }]
+                },
+                {
+                    name: 'CMB Revisions',
+                    data: [<?php foreach ($users as $dpt){ ?><?php if(key_exists($dpt->id, $cmb_version)){echo  $cmb_version[$dpt->id];}else{echo"0";}?>,<?php } ?>0]
+                }
+                ] 
             });
         });
         </script>
@@ -145,7 +150,15 @@
         </figure>
     </div>
 </div>
-<?php } else {?>
+<?php } else if(in_array("4", $this->session->userdata['roles'])){ ?>
+<div class="row">
+        <div class="col-md-2 col-md-offset-3">
+            <a href="<?= site_url('cmb')?>" class=" btn btn-success btn-small">View CMBs</a>    
+         
+        </div>
+        
+</div>
+<?php }else {?>
 <div class="row">
         <div class="col-md-2 col-md-offset-3">
             <a href="<?= site_url('cmb')?>" class=" btn btn-success btn-small">Manage CMBs</a>    

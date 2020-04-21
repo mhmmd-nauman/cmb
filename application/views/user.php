@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4>User List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="<?= site_url('users/create')?>" class=" btn btn-success btn-small">Add New Department</a>
+        <a href="<?= site_url('users/create')?>" class=" btn btn-success btn-small">Add New Login</a>
     </div>
 </div>
 <DIV class="row">
@@ -48,7 +48,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                            <span class = "caret"></span>
                                         </button>
                                         <ul class = "dropdown-menu" role = "menu" aria-labelledby = "dropdownMenu_actions">
-                                            
+                                            <li role = "presentation">
+                                                <a   href="<?php echo site_url('users/edit/'.$item->id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-edit" ></span> Edit</a>
+                                            </li>
+                                            <li class = "divider"></li>
                                             
                                             <li role = "presentation">
                                                 <a  href="<?php echo site_url('users/changepassword/'.$item->id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"  ><span class="glyphicon glyphicon-edit" ></span> Change Password</a>

@@ -31,10 +31,25 @@ class Cmb_model extends CI_Model
     {
         return $this->db->get_where("cmb", array("user_id" => $id))->result();
     }
+    
+    public function findby_ratings($id)
+    {
+        //$result = $this->db->get() ;
+        $result = $this->db->get_where("cmb_ratings", array("cmb_id" => $id));
+        if($result->num_rows() != 0){
+            return $this->db->get_where("cmb_ratings", array("cmb_id" => $id))->result();
+        }
+        else{
+            $this->db->insert('cmb_ratings', array("cmb_id" => $id));
+            return $this->db->get_where("cmb_ratings", array("cmb_id" => $id))->result();
+        }
+    }
+    
     public function findby_versions($user_id,$id)
     {
         return $this->db->get_where("cmb_versions", array("cmb_id" => $id))->result();
     }
+    
     public function findby_versions_filepath($id,$file_path)
     {
        // echo "$id,$file_path";
@@ -80,6 +95,11 @@ class Cmb_model extends CI_Model
         return $this->db->update('cmb', $data, array('cmb_id' => $data['cmb_id']));
     }
 
+    public function edit_cmb_ratings($data)
+    {
+        return $this->db->update('cmb_ratings', $data, array('cmb_id' => $data['cmb_id']));
+    }
+    
     /**
      * Delete data.
      *

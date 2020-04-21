@@ -12,12 +12,9 @@
         </div>
     <br>
     <div class="row">
-        <div class="col-md-2 col-md-offset-2">
-        <a href="<?= site_url('users/create')?>" class=" btn btn-success btn-small">Add New Login</a>    
-         
-        </div>
+        
         <div class="col-md-2 col-md-offset-1">
-        <a href="<?= site_url('users')?>" class=" btn btn-success btn-small">View Login List</a>    
+        <a href="<?= site_url('cmb')?>" class=" btn btn-success btn-small">View CMB List</a>    
          
         </div>
         </div>

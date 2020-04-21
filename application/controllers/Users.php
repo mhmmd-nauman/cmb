@@ -161,7 +161,7 @@ class Users extends CI_Controller
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $data['title'] = 'Enter department information';
+        $data['title'] = 'Enter login information';
 
         $this->form_validation->set_rules('email', 'Email', 'required');
        // $this->form_validation->set_rules('deptID', 'deptID', 'required');
@@ -178,8 +178,8 @@ class Users extends CI_Controller
         
         if ($this->form_validation->run() === FALSE)
         {
-            $data['departments'] = $this->department_model->all();
-            
+            $data['roles'] = $this->role->all();
+            // get all roles
             
             $data['users'] = $this->user->all();
             $this->load->view('header', $data);
@@ -192,11 +192,55 @@ class Users extends CI_Controller
             $this->user->add($user_data);
             $user_data = $this->user->find_with_email($this->input->post('email'));
            // print_r($user_data);
-            $roles = array("3"); // add teacher role by default for now
+            $roles = array($this->input->post('role_id')); // 
             
             $this->user->addRoles($user_data->id, $roles);
             $this->load->view('header', $data);
             $this->load->view('success_user');
+        }
+    }
+    public function edit($id)
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        
+        $data['title'] = 'Update login information';
+        //print_r($data);
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('username', 'Login', 'required');
+        $this->form_validation->set_rules('role_id', 'Role', 'required');
+        
+
+        if ($this->form_validation->run() === FALSE)
+        {
+            //echo "sss".$id;
+            $user_roles = $this->user->userWiseRoles($id);
+           // print_r($user_roles);
+            $data['roles'] = $this->role->all();
+            $data["user"] = $this->user->find($id);
+            $data["user_roles"] = $user_roles;
+            //print_r($data["user_roles"]);
+            $this->load->view('header', $data);
+            $this->load->view('edit_users',$data);
+            
+            
+        }
+        else
+        {
+            
+            $updated_data['id'] = $id;
+            $updated_data['name'] = $this->input->post('name');
+            $updated_data['email'] = $this->input->post('email');
+            $updated_data['username'] = $this->input->post('username');
+            // first revoke all roles
+            
+            $roles = array($this->input->post('role_id')); // 
+            $this->user->editRoles($id, $roles);
+
+            $this->user->edit($updated_data);
+            $this->load->view('header', $data);
+            $this->load->view('success_user',$data);
+            
         }
     }
     public function role()

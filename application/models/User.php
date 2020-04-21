@@ -34,7 +34,7 @@ class User extends CI_Model
      */
     public function find($id)
     {
-        return $this->db->get_where("users", array("id" => $id, "deleted_at" => null))->row(0);
+        return $this->db->get_where("users", array("id" => $id))->row(0);
     }
     public function find_with_email($email)
     {

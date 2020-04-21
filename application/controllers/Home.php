@@ -37,12 +37,15 @@ class Home extends CI_Controller
      */
     public function index()
     {
+        $cmb_version = array();
         $cmbs = $this->cmb_model->all();
         $data['number_of_bandels'] = count($cmbs);
         $d = 0;
         foreach($cmbs as $cmb){
             $d = $d+$cmb->downloaded;
+            
         }
+        
         $visits = $this->db->get_where("visits")->result();
         $v = count($visits);
         $data['visits'] = $v;
@@ -69,25 +72,29 @@ class Home extends CI_Controller
         $courses_data = array();
         $cmb_downloaded = array();
         $cmb_count = 0;
+        $cmb_revised = 0;
         foreach($data['users'] as $user){
          // print_r($user->id);
            $cmb_count = 0;
+           $cmb_revised = 0;
           if(in_array("3", $this->user->userWiseRoles($user->id))){
               $user_data[] = $user;
               $cmb_data[$user->id] = $this->cmb_model->findby_user($user->id);
               $courses_data[$user->id] = $this->course_model->find_by_dpt($user->id);
               foreach($cmb_data[$user->id] as $cmb){
                   $cmb_count = $cmb_count+$cmb->downloaded;
-                  
+                  $cmb_revised = $cmb_revised + count($this->cmb_model->findby_versions($this->session->userdata['userID'],$cmb->cmb_id));
                  // $courses_data[$user->id][$cmb->course_id] = $course_title_data->course_title;
               }
-              $cmb_downloaded[$user->id] = round(($cmb_count>0)?$cmb_count/10:0);
+              $cmb_downloaded[$user->id] = round(($cmb_count>0)?$cmb_count/15:0);
+              $cmb_version[$user->id] = $cmb_revised;
           }
           
         }
         $data['cmb_data'] =$cmb_data;
         $data['courses_data'] =$courses_data;
         $data['cmb_downloaded'] = $cmb_downloaded;
+        $data['cmb_version'] = $cmb_version;
         //echo "<pre>";
         //print_r($cmb_downloaded);
         //echo "</pre>";
