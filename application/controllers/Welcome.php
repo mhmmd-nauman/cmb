@@ -23,4 +23,9 @@ class Welcome extends CI_Controller {
                  exit();
 		$this->load->view('welcome_message');
 	}
+        public function test_sms(){
+           // $msg = "its my test message";
+           // $res=sendSMS(validateNumberSMS(""),$msg);
+           // print_r($res);
+        }
 }

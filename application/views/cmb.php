@@ -35,8 +35,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <thead>
                     <tr>
                         <th >CMB/ Log/ Ratings/ Remarks</th>
-                        <th class=" col-md-2">Department</th>
                         <th class=" col-md-2">Course</th>
+                        <th class=" col-md-2">Creation Date</th>
+                        
                         <th class=" col-md-1">Version </th>
                         <th class=" col-md-1">Downloaded</th>
                         <th class=" col-md-1">Size(Mbs)</th>
@@ -59,8 +60,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       if(!empty($cmb_ratings[$item->cmb_id])&&!empty($cmb_ratings[$item->cmb_id]->remarks)){?><br><b>Remarks:</b><?php echo $cmb_ratings[$item->cmb_id]->remarks;}
                       ?>
                       </td>
-                      <td><?php echo $users_array[$item->user_id];?></td>
-                      <td><?php echo $courses_array[$item->course_id];?></td>
+                       <td><?php echo $courses_array[$item->course_id];?></td>
+                      <td><?php echo date("M d, Y",strtotime($item->upload_time));?></td>
                       <td><?php echo $item->version_number;?></td>
                       <td><?php echo $item->downloaded;?></td>
                       <td><?php echo @ceil((@filesize($item->file_path)/1024)/1024);?></td>

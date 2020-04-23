@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4>Permissions List</h4>
     </div>
     <div class=" col-md-2 col-md-offset-3">
-        <a href="<?= site_url('permission/create')?>" class=" btn btn-success btn-small">Add New Permission</a>
+        <a href="<?= site_url('permissions/create')?>" class=" btn btn-success btn-small">Add New Permission</a>
     </div>
 </div>
 <DIV class="row">
@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             
                                             
                                             <li role = "presentation">
-                                                <a  href="#" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1" data-toggle="modal" data-target="#viewDepartmentModal" ><span class="glyphicon glyphicon-edit" ></span> Edit</a>
+                                                <a  href="<?php echo site_url('permissions/edit/'.$item->id)?>" class="edit_button" id="<?php echo $active_record;?>"  role = "menuitem" tabindex = "-1"   ><span class="glyphicon glyphicon-edit" ></span> Edit</a>
                                             </li>
                                             
                                             

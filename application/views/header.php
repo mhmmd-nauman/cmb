@@ -120,7 +120,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                          <ul class = "dropdown-menu">
                             <li>
-                                <li><a href = "<?= site_url('users/role')?>">Roles</a></li>
+                                <li><a href = "<?= site_url('roles')?>">Roles</a></li>
                             </li>
                             <li class = "divider"></li>
                             <li>

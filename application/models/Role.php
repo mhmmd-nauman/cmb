@@ -143,7 +143,12 @@ class Role extends CI_Model
 
         return $this->db->delete('permission_roles', array('role_id' => $role_id));
     }
+    // remove the single permission
+    public function deletePermission($role_id, $permission_id)
+    {
 
+        return $this->db->delete('permission_roles', array('role_id' => $role_id,"permission_id"=>$permission_id));
+    }
     /**
      * Read role wise permissions.
      *
@@ -179,7 +184,7 @@ class Role extends CI_Model
      */
     public function findPermission($id)
     {
-        return $this->db->get_where("permissions", array("id" => $id, "deleted_at" => null))->row(0);
+        return $this->db->get_where("permissions", array("id" => $id))->row(0);
     }
 
     /**
@@ -190,6 +195,6 @@ class Role extends CI_Model
      */
     public function roleID($name)
     {
-        return $this->db->get_where("roles", array("name" => $name, "deleted_at" => null))->row(0)->id;
+        return $this->db->get_where("roles", array("name" => $name))->row(0)->id;
     }
 }

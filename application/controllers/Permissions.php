@@ -42,58 +42,94 @@ class Permissions extends CI_Controller
         
         $data['permissions'] = $this->permission->all();
        
-        
+        // test the code
+        /*
+        add is function, roles is controller
+        $this->permission->add([
+                    'name' => 'add-roles',
+                    'display_name' => 'Create Role',
+                    'status' => 1,
+                ]);
+        */
+        //$permissions will be a permission id or an array of permission id
+       // $this->role->addPermissions(4, 1);
+        //$permissions_data=$this->role->roleWisePermissionDetails(4);
+        //print_r($permissions_data);
         $this->load->view('header',$data);
         $this->load->view('permission',$data);
     }
     public function create()
     {
+        // this will be latter updated to handle permissions
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $data['title'] = 'Enter department information';
+        $data['title'] = 'Enter Permission information';
 
-        $this->form_validation->set_rules('email', 'Email', 'required');
-       // $this->form_validation->set_rules('deptID', 'deptID', 'required');
-        $this->form_validation->set_rules('name', 'name', 'required');
-        $this->form_validation->set_rules('username', 'username', 'required');
-        $this->form_validation->set_rules('password', 'password', 'required');
-        
-        
-        $user_data['email'] = $this->input->post('email');
-       // $user_data['deptID'] = $this->input->post('deptID');
-        $user_data['name'] = $this->input->post('name');
-        $user_data['username'] = $this->input->post('username');
-        $user_data['password'] = $this->input->post('password');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('display_name', 'display_name', 'required');
+        $this->form_validation->set_rules('status', 'Status', 'required');
+       
+       
         
         if ($this->form_validation->run() === FALSE)
         {
-            $data['departments'] = $this->department_model->all();
             
             
-            $data['users'] = $this->user->all();
             $this->load->view('header', $data);
-            $this->load->view('create_users',$data);
+            $this->load->view('create_permissions',$data);
             
 
         }
         else
         {
-            $this->user->add($user_data);
-            $user_data = $this->user->find_with_email($this->input->post('email'));
-           // print_r($user_data);
-            $roles = array("3"); // add teacher role by default for now
+            $user_data['name'] = $this->input->post('name');
+            $user_data['display_name'] = $this->input->post('display_name');
+            $user_data['description'] = $this->input->post('description');
+            $user_data['status'] = $this->input->post('status');
             
-            $this->user->addRoles($user_data->id, $roles);
+            $this->permission->add($user_data);
+            
             $this->load->view('header', $data);
-            $this->load->view('success_user');
+            $this->load->view('success_permissions');
         }
     }
-    public function role()
+    public function edit($id)
     {
-       $data['role'] = $this->role->all();
-       //print_r($data['role']);
-       $this->load->view('header', $data);
-       $this->load->view('role',$data);
-    } 
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        
+        $data['title'] = 'Update permission information';
+        //print_r($data);
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('display_name', 'display_name', 'required');
+        $this->form_validation->set_rules('status', 'Status', 'required');
+        
+
+        if ($this->form_validation->run() === FALSE)
+        {
+            
+            $data["permission"] = $this->permission->find($id);
+            
+            $this->load->view('header', $data);
+            $this->load->view('edit_permissions',$data);
+            
+            
+        }
+        else
+        {
+            
+            $user_data['id'] = $id;
+            $user_data['name'] = $this->input->post('name');
+            $user_data['display_name'] = $this->input->post('display_name');
+            $user_data['description'] = $this->input->post('description');
+            $user_data['status'] = $this->input->post('status');
+            
+            $this->permission->edit($user_data);
+            $this->load->view('header', $data);
+            $this->load->view('success_permissions',$data);
+            
+        }
+    }
+     
 }

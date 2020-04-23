@@ -35,6 +35,7 @@ class Department extends CI_Controller
         $data['title'] = 'Departments';
         $this->load->view('header',$data);
         $this->load->view('department',$data);
+        // let remove dpt file its not needed
     }
     public function create()
     {
