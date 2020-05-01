@@ -13,6 +13,9 @@ class Exceptions extends CI_Controller {
             exit();	
 	}
         public function custom_404(){
-            echo "Access Denied!!";  
+            $data['title'] = 'Access Denied';
+            $this->load->view('header',$data);
+            $this->load->view('access-denied',$data);
+           
         }
 }

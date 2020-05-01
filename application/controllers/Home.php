@@ -16,7 +16,7 @@ class Home extends CI_Controller
     {
         parent::__construct();
         $this->load->library('auth');
-        $this->auth->route_access();
+        //$this->auth->route_access();
         //print_r($this->session->userdata['roles']);
         if(in_array("2", $this->session->userdata['roles'])){
             //echo "could be teacher";

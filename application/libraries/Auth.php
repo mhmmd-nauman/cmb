@@ -158,6 +158,7 @@ class Auth
     protected function credentials($username, $password)
     {
         $user = $this->CI->db->get_where("users", array("username" => $username, "status" => 1))->row(0);
+       // return $user;
         if($user && password_verify($password, $user->password)) {
             return $user;
         }
@@ -177,6 +178,7 @@ class Auth
             "username" => $this->user->username,
             "name" => $this->user->name,
             "roles" => $this->userWiseRoles(),
+            "permissions" => $this->userPermissions(),
             "loginStatus" => true
         ));
 

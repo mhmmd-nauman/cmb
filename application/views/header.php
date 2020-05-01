@@ -82,6 +82,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <li>
                         <a href ="<?php echo site_url('course')?>"  > Courses</a>
                       </li>
+                      <li><a href = "<?= site_url('users')?>">Logins</a></li>
+                       <li class = "dropdown">
+                         <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
+                            Roles 
+                            <b class = "caret"></b>
+                         </a>
+
+                         <ul class = "dropdown-menu">
+                            <li>
+                                <li><a href = "<?= site_url('roles')?>">Roles</a></li>
+                            </li>
+                            <li class = "divider"></li>
+                            <li>
+                                <a href ="<?php echo site_url('permissions')?>"  >Permission</a>
+                            </li>
+                            
+                           
+                            
+                            
+                        </ul>
+
+                      </li>
                       <?php if(in_array("1", $this->session->userdata['roles'])){?> 
                        <!--
                       <li class = "dropdown">
@@ -110,29 +132,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        -->
                       
                       
-                      <li><a href = "<?= site_url('users')?>">Logins</a></li>
                       
-                      <li class = "dropdown">
-                         <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">
-                            Roles 
-                            <b class = "caret"></b>
-                         </a>
-
-                         <ul class = "dropdown-menu">
-                            <li>
-                                <li><a href = "<?= site_url('roles')?>">Roles</a></li>
-                            </li>
-                            <li class = "divider"></li>
-                            <li>
-                                <a href ="<?php echo site_url('permissions')?>"  >Permission</a>
-                            </li>
-                            
-                           
-                            
-                            
-                        </ul>
-
-                      </li>
+                      
+                     
                       <?php } ?>
                       <li><a href = "<?= site_url('login/logout')?>">Logout</a></li>
           

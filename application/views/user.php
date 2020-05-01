@@ -18,7 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <th class=" col-md-1">ID#</th>
                         <th class=" col-md-1">Login</th>
                         <th>Name</th>
-                        <th class="col-md-2">Role</th>
+                        <th class="col-md-2">Parent</th>
+                        <th class="col-md-1">Role</th>
                         <th class=" col-md-1">Actions</th>
                     </tr>
                 </thead>
@@ -35,6 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <td><?php echo $item->id;?></td>
                       <td><?php echo $item->username;?></td>
                       <td><?php echo $item->name;?><br><?php echo $item->email;?></td>
+                      <td><?php echo $user_parents_data[$item->parent_id];?></td>
                       <td><?php 
                       if(key_exists($item->id,$user_roles)){
                             foreach($user_roles[$item->id] as $role)echo$role.",";

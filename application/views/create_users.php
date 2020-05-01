@@ -9,8 +9,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php echo validation_errors(); ?>
 
 <?php echo form_open('users/create'); ?>
-
-    
+    <?php if(in_array('admin-admin', $this->auth->userPermissions())){?>    
+    <div class="form-group">
+        <label for="email">Select Parent:</label>
+        <select name="parent_id" class="form-control">
+            <option value="0">Parent</option>
+            <?php  foreach ($users as $user){ ?>
+                <option  value="<?php echo $user->id;?>"><?php echo $user->name;?></option>
+            <?php } ?>
+        </select>
+    </div>
+    <?php }else{?>
+        <input name="parent_id" type="hidden" value="<?php echo $this->session->userdata['userID'];?>">
+    <?php } ?>
     <div class="form-group">
         <label for="email">Name:</label>
         <input name="name" type="text" class="form-control" id="name">
@@ -27,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <label for="email">Password:</label>
         <input name="password" type="text" class="form-control" id="password">
     </div>
-    
+    <?php if(in_array('admin-admin', $this->auth->userPermissions())){?>
     <div class="form-group">
         <label for="email">Select Role:</label>
         <select name="role_id" class="form-control">
@@ -37,7 +48,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php } ?>
         </select>
     </div>
-
+    <?php } else{?>
+        <input name="role_id" type="hidden" value="<?php echo $this->session->userdata['roles'][0];?>">
+    <?php }?>
     <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
@@ -48,8 +61,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </body>
 </html>
 
-<script type="text/javascript">
-$(document).ready(function(){
-    
-});
-</script>

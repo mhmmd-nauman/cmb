@@ -24,8 +24,9 @@ class Users extends CI_Controller
         $this->load->helper('url_helper');
         $this->load->model('department_model');
         $this->load->library('auth');
-        if(empty($this->auth->userID())){
-            redirect("/login");
+        $user_permissions=$this->auth->userPermissions();
+        if(!in_array('admin-admin', $user_permissions)){
+            $this->auth->route_access();
         }
         
     }
@@ -125,8 +126,18 @@ class Users extends CI_Controller
     }
     public function index()
     {
-        
-        $data['users'] = $this->user->all();
+        if(in_array('admin-admin', $this->auth->userPermissions())){
+            $data['users'] = $this->user->all();
+        }else{
+            $data['users'] = $this->user->find_all_children_by_parent($this->session->userdata['userID']);
+        }
+        $data['users_parents'] = $this->user->find_all_parents();
+        $user_parents_data = array();
+        $user_parents_data[0]="No Parent";
+        foreach($data['users_parents'] as $parent){
+            $user_parents_data[$parent->id] = $parent->name;
+        }
+        $data['user_parents_data'] = $user_parents_data;
        // print_r($data['users']);
         $user_roles_data = array();
         foreach($data['users'] as $user){
@@ -141,6 +152,7 @@ class Users extends CI_Controller
                 $user_roles_data[$user->id][]=$this->role->find($role)->display_name;
             }
         }
+        //print_r($this->auth->userPermissions());
        // print_r($user_roles[1]);
         $data['user_roles'] = $user_roles_data;
         // departments
@@ -171,7 +183,7 @@ class Users extends CI_Controller
         
         
         $user_data['email'] = $this->input->post('email');
-       // $user_data['deptID'] = $this->input->post('deptID');
+        $user_data['parent_id'] = $this->input->post('parent_id');
         $user_data['name'] = $this->input->post('name');
         $user_data['username'] = $this->input->post('username');
         $user_data['password'] = $this->input->post('password');
@@ -181,7 +193,7 @@ class Users extends CI_Controller
             $data['roles'] = $this->role->all();
             // get all roles
             
-            $data['users'] = $this->user->all();
+            $data['users'] = $this->user->find_all_parents();
             $this->load->view('header', $data);
             $this->load->view('create_users',$data);
             
@@ -214,6 +226,7 @@ class Users extends CI_Controller
         if ($this->form_validation->run() === FALSE)
         {
             //echo "sss".$id;
+            $data['users'] = $this->user->find_all_parents();
             $user_roles = $this->user->userWiseRoles($id);
            // print_r($user_roles);
             $data['roles'] = $this->role->all();
@@ -232,6 +245,7 @@ class Users extends CI_Controller
             $updated_data['name'] = $this->input->post('name');
             $updated_data['email'] = $this->input->post('email');
             $updated_data['username'] = $this->input->post('username');
+            $updated_data['parent_id'] = $this->input->post('parent_id');
             // first revoke all roles
             
             $roles = array($this->input->post('role_id')); // 

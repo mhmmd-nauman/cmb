@@ -19,14 +19,15 @@ class Cmb extends CI_Controller
     {
         parent::__construct();
         $this->load->library('auth');
-        //$this->auth->route_access();
+        
         $this->load->model('cmb_model');
         $this->load->helper('url_helper');
         $this->load->model('department_model');
         $this->load->model('course_model');
         $this->load->model('user');
-        if(empty($this->auth->userID())){
-            redirect("/login");
+        $user_permissions=$this->auth->userPermissions();
+        if(!in_array('admin-admin', $user_permissions)){
+            $this->auth->route_access();
         }
     }
 
@@ -38,7 +39,7 @@ class Cmb extends CI_Controller
     public function search_by_dpt(){
         $data['title'] = 'CMB';
         
-        if(in_array("1", $this->session->userdata['roles']) || in_array("4", $this->session->userdata['roles'])){
+        if(in_array('admin-admin', $this->auth->userPermissions()) || in_array("4", $this->session->userdata['roles'])){
             $data['cmbs'] = $this->cmb_model->all();
         }else{
             $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
@@ -52,7 +53,7 @@ class Cmb extends CI_Controller
     {
         //user_id = $this->session->userdata['userID']
         $data['searched_dpt'] = 0;
-        if(in_array("1", $this->session->userdata['roles']) || in_array("4", $this->session->userdata['roles'])){
+        if(in_array('admin-admin', $this->auth->userPermissions()) || in_array("4", $this->session->userdata['roles'])){
             if(empty($searchbydpt)){
                // $data['cmbs'] = $this->cmb_model->all();
                 $data['cmbs'] = $this->cmb_model->findby_user(0);
@@ -64,6 +65,7 @@ class Cmb extends CI_Controller
             $data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
         }
         //$data['cmbs'] = $this->cmb_model->findby_user($this->session->userdata['userID']);
+        //print_r($data['cmbs']);
         $data['title'] = 'CMB';
         
         // cmb versions count
@@ -77,19 +79,14 @@ class Cmb extends CI_Controller
         //print_r($cmb_version);
         $data['cmb_version'] = $cmb_version;
         $data['cmb_ratings'] = $cmb_ratings;
-        $departments = $this->department_model->all();
-        foreach($departments as $dpt){
-            $data_dpt[$dpt->department_id] = $dpt->department_title;
-        }
-        $data['departments'] = $data_dpt;
-        //print_r($data_dpt);
+        
         if(in_array("1", $this->session->userdata['roles']) || in_array("4", $this->session->userdata['roles'])){
            $courses = $this->course_model->all();
         }else{
             //print_r($this->session->userdata);
             $courses = $this->course_model->find_by_dpt($this->session->userdata['userID']);
         }
-        //$courses = $this->course_model->all();
+        $courses = $this->course_model->all();
         $data['courses'] = $courses;
         $data_crt = array();
         foreach($courses as $crt){

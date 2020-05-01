@@ -20,7 +20,10 @@ class Course extends CI_Controller
         parent::__construct();
         $this->load->database();
         $this->load->library('auth');
-        //$this->auth->route_access();
+        $user_permissions=$this->auth->userPermissions();
+        if(!in_array('admin-admin', $user_permissions)){
+            $this->auth->route_access();
+        }
         $this->load->model('course_model');
         $this->load->helper('url_helper');
         $this->load->model('department_model');
@@ -34,13 +37,13 @@ class Course extends CI_Controller
      */
     public function index()
     {
-        if(in_array("1", $this->session->userdata['roles'])){
-            //$data['courses'] = $this->course_model->all();
+        if(in_array('admin-admin', $this->auth->userPermissions())){
+            $data['courses'] = $this->course_model->all();
         }else{
             //print_r($this->session->userdata);
-           // $data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
+            $data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
         }
-        $data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
+        //$data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
        // $departments = $this->department_model->all();
         //foreach($departments as $dpt){
            // $data_dpt[$dpt->department_id] = $dpt->department_title;

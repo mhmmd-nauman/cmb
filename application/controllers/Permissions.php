@@ -24,8 +24,9 @@ class Permissions extends CI_Controller
         $this->load->model('permission');
         $this->load->helper('url_helper');
         $this->load->library('auth');
-        if(empty($this->auth->userID())){
-            redirect("/login");
+        $user_permissions=$this->auth->userPermissions();
+        if(!in_array('admin-admin', $user_permissions)){
+            $this->auth->route_access();
         }
         
     }

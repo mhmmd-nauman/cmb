@@ -40,7 +40,14 @@ class User extends CI_Model
     {
         return $this->db->get_where("users", array("email" => $email, "deleted_at" => null))->row(0);
     }
-
+    public function find_all_parents()
+    {
+        return $this->db->get_where("users", array("parent_id" => 0))->result();
+    }
+    public function find_all_children_by_parent($parent_id)
+    {
+        return $this->db->get_where("users", array("parent_id" => $parent_id))->result();
+    }
     /**
      * Find all data.
      *

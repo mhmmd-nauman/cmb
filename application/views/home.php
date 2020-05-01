@@ -5,7 +5,7 @@
          <div class="col-md-1"><a href="<?= site_url('users/changepassword')?>" class="btn btn-primary btn-sm">Change Password</a></div>
     </div>
 <br><hr>
-<?php if(in_array("1", $this->session->userdata['roles'])){?>
+<?php if(in_array('admin-admin', $this->auth->userPermissions())){?>
       <div class="row">
          <div class="col-md-2 col-md-offset-1">
              <b> Departments</b>: <button class="btn btn-info btn-block"><?php echo $departments;?></button> 
