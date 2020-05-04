@@ -53,8 +53,11 @@ class Client extends CI_Controller
         }
         $data['cmb_data'] =$cmb_data;
         $data['courses_data'] =$courses_data;
+        //echo "<pre>";
         //print_r($cmb_data);
-        //print_r($courses_data);
+        
+       // print_r($courses_data);
+       // echo "</pre>";
         $data['users'] =$user_data;
         //
         $courses = $this->course_model->all();

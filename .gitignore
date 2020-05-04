@@ -29,3 +29,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+*.jpg
+*.jpg
+captcha/1588326263.2013.jpg
+captcha/1588326762.5032.jpg

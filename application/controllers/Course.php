@@ -27,6 +27,7 @@ class Course extends CI_Controller
         $this->load->model('course_model');
         $this->load->helper('url_helper');
         $this->load->model('department_model');
+        $this->load->model('user');
         
     }
 
@@ -44,12 +45,13 @@ class Course extends CI_Controller
             $data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
         }
         //$data['courses'] = $this->course_model->find_by_dpt($this->session->userdata['userID']);
-       // $departments = $this->department_model->all();
-        //foreach($departments as $dpt){
-           // $data_dpt[$dpt->department_id] = $dpt->department_title;
-      //  }
+        $users = $this->user->all();
+        foreach($users as $usr){
+            $data_usr[$usr->id] = $usr->name;
+            
+        }
        
-        //$data['departments'] = $data_dpt;
+        $data['users'] = $data_usr;
         $data['title'] = 'Course';
         $this->load->view('header',$data);
         $this->load->view('course',$data);

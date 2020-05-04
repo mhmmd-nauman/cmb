@@ -27,20 +27,25 @@ class Cmb_model extends CI_Model
     {
         return $this->db->get_where("cmb", array("cmb_id" => $id))->row(0);
     }
-    public function findby_user($id)
+    public function findby_user($id=0)
     {
-        $user=$this->db->get_where("users", array("id" => $id))->row(0);
         $return_array = array();
-        //array_merge($array1, $array2);
-        if($user->parent_id > 0){
-            $return_array = array_merge($return_array,$this->db->get_where("cmb", array("user_id" => $user->parent_id))->result());
-            $childrens = $this->db->get_where("users", array("parent_id" => $user->parent_id))->result();
-            foreach($childrens as $child){
-                $return_array = array_merge($return_array,$this->db->get_where("cmb", array("user_id" => $child->id))->result());
+        if($id){
+            $user=$this->db->get_where("users", array("id" => $id))->row(0);
+            $return_array = array();
+
+            if($user->parent_id > 0){
+                $return_array = array_merge($return_array,$this->db->get_where("cmb", array("user_id" => $user->parent_id))->result());
+                $childrens = $this->db->get_where("users", array("parent_id" => $user->parent_id))->result();
+                foreach($childrens as $child){
+                    $return_array = array_merge($return_array,$this->db->get_where("cmb", array("user_id" => $child->id))->result());
+                }
+                return $return_array;
+            }else{
+               return $this->db->get_where("cmb", array("user_id" => $id))->result();
             }
-            return $return_array;
         }else{
-           return $this->db->get_where("cmb", array("user_id" => $id))->result();
+            return $return_array;
         }
         
     }

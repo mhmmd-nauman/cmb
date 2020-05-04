@@ -30,7 +30,18 @@ class Course_model extends CI_Model
     
     public function find_by_dpt($id)
     {
-        return $this->db->get_where("courses", array("user_id" => $id))->result();
+        $user=$this->db->get_where("users", array("id" => $id))->row(0);
+        $return_array = array();
+        if($user->parent_id > 0){
+            $return_array = array_merge($return_array,$this->db->get_where("courses", array("user_id" => $user->parent_id))->result());
+            $childrens = $this->db->get_where("users", array("parent_id" => $user->parent_id))->result();
+            foreach($childrens as $child){
+                $return_array = array_merge($return_array,$this->db->get_where("courses", array("user_id" => $child->id))->result());
+            }
+            return $return_array;
+        }else{
+            return $this->db->get_where("courses", array("user_id" => $id))->result();
+        }
     }
 
     /**

@@ -55,7 +55,7 @@ class Home extends CI_Controller
         foreach($data['departments'] as $login){
             foreach($this->user->userWiseRoleDetails($login->id) as $role_data){
                 //print_r($role_data);
-                if($role_data->name == "department"){
+                if($role_data->name == "hod"){
                     $total_department = $total_department + 1;
                 }
                 //exit;

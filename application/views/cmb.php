@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <a href="<?= site_url('cmb/create')?>" class=" btn btn-success btn-small">Upload CMB Material</a>
     </div>
     </div>
+<?php if(in_array('admin-admin', $this->auth->userPermissions())){?>
     <div class="row">
     <div class=" col-md-9 col-md-offset-1">
         <form action="<?= site_url('cmb/index/searchbydpt')?>" class = "form-inline" role = "form" method="post">
@@ -27,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     
 </div>
+<?php }?>
 <br>
 <DIV class="row">
          <div class=" col-md-10 col-md-offset-1">

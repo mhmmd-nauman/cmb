@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </select>
     </div>
     <?php } else{?>
-        <input name="role_id" type="hidden" value="<?php echo $this->session->userdata['roles'][0];?>">
+        <input name="role_id" type="hidden" value="5">
     <?php }?>
     <button type="submit" class="btn btn-primary">Submit</button>
 
