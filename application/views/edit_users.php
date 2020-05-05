@@ -45,6 +45,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php } ?>
         </select>
     </div>
+    <?php }else if(in_array('assign_roles-users', $this->auth->userPermissions())){?>
+        <div class="form-group">
+        <label for="email">Select Role:</label>
+        <select name="role_id" class="form-control">
+           <option <?php if(in_array(5, $user_roles))echo"selected";?> value="5">Departmental Login</option>
+           <option <?php if(in_array(4, $user_roles))echo"selected";?> value="4">Reviewer</option>
+           
+        </select>
+    </div>
     <?php } else{?>
         <input name="role_id" type="hidden" value="5">
     <?php }?>
