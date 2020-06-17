@@ -29,11 +29,39 @@ class Login extends CI_Controller
     */
     public function __construct()
     {
+        
         parent::__construct();
         $this->load->database();
         $this->load->library(['auth', 'form_validation']);
         $this->load->helper('captcha');
-        
+        // we need to check if its from valid ip
+        $ip = $this->input->ip_address();
+        switch($ip){
+           case "::1":
+               //echo "its local";
+               break;
+           default:
+                // check if the ip is the proper range
+                //echo $ip ;//= "172.2.0.0";
+                $ip_data = explode(".", $ip);
+                //print_r($ip_data);
+                switch($ip_data[0]){
+                    case "172":
+                        //echo "valid ip";
+                    break;
+                    case "10":
+                        //echo "vlid too";
+                        break;
+                    default:
+                        $this->load->helper('url');
+                         redirect('exceptions/custom_404', 'refresh');
+                        // Exceptions custom_404
+                        exit();
+
+                }
+               
+        }
+        //echo $ip;
     }
 
     /**
